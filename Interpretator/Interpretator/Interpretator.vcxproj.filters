@@ -23,5 +23,11 @@
     <ClInclude Include="String.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Lexeme.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tables.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

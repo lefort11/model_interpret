@@ -22,6 +22,7 @@ public:
 	String(char c)
 	{
 		str = new char(c);
+		length = 1;
 	}
 
 	String(String const& other)
@@ -60,6 +61,16 @@ public:
 	~String()
 	{
 		delete[] str;
+	}
+
+	operator char*() const
+	{
+		return str;
+	}
+
+	operator const char*() const
+	{
+		return str;
 	}
 
 };

@@ -113,7 +113,9 @@
     <ClCompile Include="Scanner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lexeme.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="Tables.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
