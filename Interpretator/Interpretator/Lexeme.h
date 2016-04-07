@@ -221,7 +221,7 @@ public:
 		return ptr[i];
 	}
 
-	bool Search(const char* string) const
+	bool IsAdded(const char* string) const
 	{
 		for (int i = 0; i < size; ++i)
 			if ( ptr[i].GetName() == String(string) )

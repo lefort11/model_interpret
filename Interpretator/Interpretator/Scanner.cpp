@@ -297,8 +297,11 @@ Lexeme Scanner::GetLexeme()
 				if(type != LEXEME_VOID) // it is a reserved word
 					return Lexeme(type, 0);
 				// it is an identifier
-				Identifier id(VOID, buf, 0, 0, nullptr);
-				identTable.Push(id);
+				if (!identTable.IsAdded(buf))
+				{
+					Identifier id(VOID, buf, 0, 0, nullptr);
+					identTable.Push(id);
+				}
 				return Lexeme(LEXEME_NAME, lastIdent++);
 			}
 			break;
