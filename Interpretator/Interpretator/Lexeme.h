@@ -221,12 +221,12 @@ public:
 		return ptr[i];
 	}
 
-	bool IsAdded(const char* string) const
+	int Search(const char* string) const
 	{
 		for (int i = 0; i < size; ++i)
 			if ( ptr[i].GetName() == String(string) )
-				return true;
-		return false;
+				return i;
+		return -1;
 	}
 
 };

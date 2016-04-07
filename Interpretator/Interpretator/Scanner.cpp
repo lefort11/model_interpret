@@ -297,12 +297,14 @@ Lexeme Scanner::GetLexeme()
 				if(type != LEXEME_VOID) // it is a reserved word
 					return Lexeme(type, 0);
 				// it is an identifier
-				if (!identTable.IsAdded(buf))
+				int pos;
+				if ((pos = identTable.Search(buf)) == -1) // not found
 				{
 					Identifier id(VOID, buf, 0, 0, nullptr);
 					identTable.Push(id);
+					return Lexeme(LEXEME_NAME, lastIdent++);
 				}
-				return Lexeme(LEXEME_NAME, lastIdent++);
+				return Lexeme(LEXEME_NAME, pos);
 			}
 			break;
 
