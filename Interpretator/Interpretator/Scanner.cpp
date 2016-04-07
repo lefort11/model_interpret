@@ -346,7 +346,7 @@ Lexeme Scanner::GetLexeme()
 			{
 				if ((c == ' ') || c == '\n')
 				{
-					while ((c == ' ') || c == '\n')
+					while ((c == ' ') || (c == '\n'))
 						c = GetChar();
 					state = STATE_START;
 				}
