@@ -20,14 +20,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="String.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Lexeme.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tables.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="String.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

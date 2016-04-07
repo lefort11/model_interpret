@@ -10,6 +10,9 @@ enum LexemeType
 	LEXEME_STRING,
 	LEXEME_REAL,
 	LEXEME_STRUCT,
+	LEXEME_INT_CONST,
+	LEXEME_STRING_CONST,
+	LEXEME_REAL_CONST,
 
 	LEXEME_IF, //6
 	LEXEME_ELSE,
@@ -43,7 +46,11 @@ enum LexemeType
 	LEXEME_ASSIGNMENT,
 	LEXEME_COLON,
 	LEXEME_APOSTROPHE,
-	LEXEME_QUOTE //36
+	LEXEME_QUOTE, //36
+	LEXEME_POINT,
+
+	LEXEME_NAME,
+	LEXEME_END
 };
 
 class Lexeme
@@ -72,12 +79,35 @@ public:
 	}
 };
 
+enum IdentType
+{
+	VOID,
+	INT,
+	STRING,
+	REAL,
+	STRUCT_NAME,
+	USER,
+	INT_CONST,
+	REAL_CONST,
+	STRING_CONST
+};
 
 class Identifier
 {
+	IdentType type;
 	String name;
+	int intValue;
+	float realValue;
+	String stringValue;
+
 public:
-	Identifier(String name = nullptr): name(name) {}
+	Identifier(): type(VOID), name(nullptr), intValue(0), realValue(0), stringValue(nullptr) {}
+	Identifier(IdentType type, String name, int intv, float floatv, String stringv): type(type), name(name), intValue(intv), realValue(floatv), stringValue(stringv) {}
+
+	String& GetName()
+	{
+		return name;
+	}
 };
 
 class LexemeTable
@@ -131,12 +161,19 @@ public:
 	{
 		return ptr[i];
 	}
+
+	LexemeTable& operator+= (Lexeme lex)
+	{
+		Push(lex);
+		return (*this);
+	}
 };
 
 class IdentTable
 {
 	Identifier* ptr;
 	int size;
+
 public:
 
 	IdentTable() : ptr(nullptr), size(0) {}
@@ -183,5 +220,13 @@ public:
 	{
 		return ptr[i];
 	}
-};
 
+	bool Search(const char* string) const
+	{
+		for (int i = 0; i < size; ++i)
+			if ( ptr[i].GetName() == String(string) )
+				return true;
+		return false;
+	}
+
+};

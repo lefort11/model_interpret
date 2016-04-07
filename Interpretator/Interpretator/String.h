@@ -8,6 +8,7 @@ class String
 {
 	char* str;
 	int length;
+	int bufSize;
 
 public:
 
@@ -17,12 +18,25 @@ public:
 		str = new char[length+1];
 		strcpy(str, source);
 		str[length] = '\0';
+		bufSize = length + 1;
 	}
+
+	/*String(char* source = nullptr)
+	{
+		length = strlen(source);
+		str = new char[length + 1];
+		strcpy(str, source);
+		str[length] = '\0';
+		bufSize = length + 1;
+	} */
 
 	String(char c)
 	{
-		str = new char(c);
+		str = new char[2];
+		*str = c;
+		str[1] = '\0';
 		length = 1;
+		bufSize = 2;
 	}
 
 	String(String const& other)
@@ -31,6 +45,16 @@ public:
 		str = new char[length + 1 ];
 		strcpy(str, other.str);
 		str[length] = '\0';
+		bufSize = other.bufSize;
+	}
+
+	String(int size, int fictive)
+	{
+		bufSize = size;
+		length = 0;
+		str = new char[bufSize];
+		for (int i = 0; i < bufSize; ++i)
+			str[i] = '\0';
 	}
 
 	String& operator=(String const& other)
@@ -45,14 +69,33 @@ public:
 
 	String& operator+=(String const& other)
 	{
-		length = length + other.length;
-		char* temp = new char[length + 1];
-		strcpy(temp, str);
-		temp[length] = '\0';
-		delete[] str;
-		str = temp;
-		strcat(str, other.str);
+		if (bufSize - 1 <= length + other.length) //if bufer is smaller than needed
+		{
+			length = length + other.length;
+			bufSize = length + 1;
+			char* temp = new char[length + 1];
+			strcpy(temp, str);
+			temp[length] = '\0';
+			delete[] str;
+			str = temp;
+			strcat(str, other.str);
+		}
+		else
+		{
+			strcat(str, other.str);
+		}
 		return (*this);
+	}
+
+	void Clear() const
+	{
+		for (int i = 0; i < bufSize; ++i)
+			str[i] = '\0';
+	}
+
+	bool operator==(String const& other) const
+	{
+		return strcmp(str, other.str);
 	}
 
 
