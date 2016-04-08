@@ -109,7 +109,7 @@ const char* Scanner::DelimiterTable[] =
 	"=",
 	":",
 	"'",
-	"""",
+	"\"",
 	".",
 	nullptr
 };
