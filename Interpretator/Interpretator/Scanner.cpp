@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Lexeme.h"
-#include <cstdio>
-#include <cctype>
+
 
 
 using namespace std;
@@ -170,10 +169,11 @@ LexemeType Scanner::IsReserved(const char* word)
 	int i = 1;
 	while(WordTable[i] != nullptr)
 	{
-		strcmp(word, WordTable[i]);
+		if(strcmp(word, WordTable[i]))
+			return LexemeWords[i];
 		++i;
 	}
-	return LexemeWords[i];
+	return LEXEME_VOID;
 }
 
 LexemeType Scanner::IsDelimiter(const char* word)
@@ -181,10 +181,11 @@ LexemeType Scanner::IsDelimiter(const char* word)
 	int i = 1;
 	while(DelimiterTable[i] !=  nullptr)
 	{
-		strcmp(word, DelimiterTable[i]);
+		if(strcmp(word, DelimiterTable[i]))
+			return LexemeDelimteres[i];
 		++i;
 	}
-	return LexemeDelimeters[i];
+	return LEXEME_VOID;
 }
 
 
