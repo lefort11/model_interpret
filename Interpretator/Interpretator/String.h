@@ -59,10 +59,20 @@ public:
 
 	String& operator=(String const& other)
 	{
-		if(this != &other)
+		/*if(this != &other)
 		{
 			this->~String();
 			new(this) String(other);
+		}
+		return (*this); */
+		if(this != &other)
+		{
+			delete[] str;
+			length = other.length;
+			str = new char[length + 1];
+			strcpy(str, other.str);
+			str[length] = '\0';
+			bufSize = other.bufSize;
 		}
 		return (*this);
 	}

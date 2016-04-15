@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexeme.h" />
+    <ClInclude Include="preprocessor.h" />
     <ClInclude Include="String.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

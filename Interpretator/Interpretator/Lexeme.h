@@ -108,6 +108,21 @@ public:
 	{
 		return name;
 	}
+
+	void ChangeIntValue(int v)
+	{
+		intValue = v;
+	}
+
+	void ChangeName(String newName)
+	{
+		name = newName;
+	}
+
+	IdentType GetType() const
+	{
+		return type;
+	}
 };
 
 class LexemeTable
@@ -228,5 +243,6 @@ public:
 				return i;
 		return -1;
 	}
+
 
 };

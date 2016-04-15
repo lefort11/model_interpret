@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Lexeme.h"
-
-
+#include "preprocessor.h"
 
 using namespace std;
 
@@ -20,32 +19,34 @@ class Scanner
 		STATE_DELIMITER,
 		STATE_COMMENT,
 		STATE_ERROR,
+		STATE_PREPROCESSOR,
 		//STATE_END
 	};
 
 	static const char* WordTable[];
 	static const char* DelimiterTable[];
 	static const LexemeType LexemeWords[];
-	static const LexemeType LexemeDelimeters[];
+	static const LexemeType LexemeDelimiters[];
 
 	static LexemeTable lexemeTable;
 	static IdentTable identTable;
 
 	FILE* file;
 	State state;
-	char c;
+	int c;
 	String buf;
 	int lastIdent;
+	Preprocessor PP;
 public:
 
 
-	Scanner(const char* filepath) : file(fopen(filepath, "r")), state(STATE_START), c(0), buf(10, 0), lastIdent(0) {}
+	Scanner(const char* filepath) : file(fopen(filepath, "r")), state(STATE_START), c(0), buf(20, 0), lastIdent(0), PP() {}
 
 	static LexemeType IsDelimiter(const char* word);
 
 	static LexemeType IsReserved(const char* word);
 
-	char GetChar() const
+	int GetChar() const
 	{
 		return fgetc(file);
 	}
@@ -135,7 +136,7 @@ const LexemeType Scanner::LexemeWords[] =
 	LEXEME_VOID
 };
 
-const LexemeType Scanner::LexemeDelimeters[] =
+const LexemeType Scanner::LexemeDelimiters[] =
 {
 	LEXEME_VOID,
 	LEXEME_PLUS,
@@ -182,7 +183,7 @@ LexemeType Scanner::IsDelimiter(const char* word)
 	while(DelimiterTable[i] !=  nullptr)
 	{
 		if(strcmp(word, DelimiterTable[i]))
-			return LexemeDelimteres[i];
+			return LexemeDelimiters[i];
 		++i;
 	}
 	return LEXEME_VOID;
@@ -303,14 +304,17 @@ Lexeme Scanner::GetLexeme()
 				{
 					Identifier id(VOID, buf, 0, 0, nullptr);
 					identTable.Push(id);
-					return Lexeme(LEXEME_NAME, lastIdent++);
+					return Lexeme(LEXEME_NAME, lastIdent++); 
 				}
+				//return Lexeme(LEXEME_NAME, pos); //this should be corrected for Preprocessing
+				if (identTable[pos].GetType() == INT_CONST) //this name can be a defined name of some int constant
+					return Lexeme(LEXEME_INT_CONST, pos);
 				return Lexeme(LEXEME_NAME, pos);
 			}
 			break;
 
 		case STATE_NAME:
-			if (isdigit(c)) //here i may come only after getting digets
+			if (isdigit(c)) //here i may come only after getting digits
 			{
 				buf += c;
 				c = GetChar();
@@ -361,7 +365,7 @@ Lexeme Scanner::GetLexeme()
 					state = STATE_STRING_CONST;
 				}
 				else if (c == '\r')
-					c = GetChar(); // will be '\n' next
+					c = GetChar(); //'\n' will be next
 				LexemeType type = IsDelimiter(buf);
 				if (type == LEXEME_VOID)
 					state = STATE_ERROR;
@@ -387,6 +391,14 @@ Lexeme Scanner::GetLexeme()
 			}
 			break;
 
+		case STATE_PREPROCESSOR:
+			state = STATE_START;
+			PP.Handler(file, identTable, lastIdent); //after PP handling last read char was '\n' || EOF !!!!
+			//Mb i should return f.e. -1 if the EOF was reached to prevent errors
+			// but if there is ' ' or '\n' before EOF (if an empty string at the end of text file) then it will be ok.
+			c = GetChar();
+			break;
+
 		case STATE_ERROR:
 			throw 1;
 		}
@@ -402,4 +414,6 @@ void Scanner::MakeLexemeTable()
 		buf.Clear();
 		lexemeTable.Push(GetLexeme());
 	}
+	if (PP.GetIfNumber() != 0)
+		throw "a";
 }

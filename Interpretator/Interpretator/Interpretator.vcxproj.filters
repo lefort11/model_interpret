@@ -26,5 +26,8 @@
     <ClInclude Include="String.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="preprocessor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
