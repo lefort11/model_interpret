@@ -42,9 +42,10 @@ public:
 	String(String const& other)
 	{
 		length = other.length;
-		str = new char[length + 1 ];
+		str = new char[other.bufSize];
 		strcpy(str, other.str);
-		str[length] = '\0';
+		for (int i = length; i < other.bufSize; ++i)
+			str[i] = '\0';
 		bufSize = other.bufSize;
 	}
 
@@ -69,9 +70,10 @@ public:
 		{
 			delete[] str;
 			length = other.length;
-			str = new char[length + 1];
+			str = new char[other.bufSize];
 			strcpy(str, other.str);
-			str[length] = '\0';
+			for (int i = length; i < other.bufSize; ++i)
+				str[i] = '\0';
 			bufSize = other.bufSize;
 		}
 		return (*this);

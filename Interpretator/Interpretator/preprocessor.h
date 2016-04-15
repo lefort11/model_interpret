@@ -227,60 +227,72 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 		break;
 
 	case PP_IFDEF:
-		localIfNumber = ++ifNumber;
-		idName = ReadIdent(f);
-		if (IsDefined(idName) == defined.end()) //was not defined
+		localIfNumber = 1;
+		++ifNumber;
+		idName = ReadIdent(f); // c = ' ' or '\n' after that
+		if(IsDefined(idName) == defined.end())
 		{
-			while ((ifNumber > 0) || (c != EOF))
+			while ((c != EOF) && (localIfNumber > 0))
 			{
+				c = fgetc(f);
 				while (c != '#')
-				{
 					c = fgetc(f);
-				}
-				// now c == '#'
+				// # was found
 				buf.Clear();
 				GetDirective(f);
-				if (buf == String("endif"))
-					--ifNumber;
-				else if ((buf == String("ifndef")) || (buf == String("ifdef")))
+				if ((buf == String("ifdef")) || (buf == String("ifndef")))
+				{
 					++ifNumber;
-				else if ((buf == String("endif") && (ifNumber == localIfNumber)))
+					++localIfNumber;
+				}
+				else if ((buf == String("endif")))
+				{
+					--ifNumber;
+					--localIfNumber;
+				}
+				else if ((buf == String("else")) && (localIfNumber == 1))
 					break;
 				else
-					c = fgetc(f);
+					throw "a";
+
 			}
-			if (c == EOF)
-				throw "a";
 		}
 		break;
 
 
 	case PP_IFNDEF:
-		localIfNumber = ++ifNumber;
-		idName = ReadIdent(f);
-		if (IsDefined(idName) != defined.end()) //was defined
+		localIfNumber = 1;
+		++ifNumber;
+		idName = ReadIdent(f); // c = ' ' or '\n' after that
+		if (IsDefined(idName) != defined.end())
 		{
-			while (ifNumber > 0)
+			while ((c != EOF) && (localIfNumber > 0))
 			{
+				c = fgetc(f);
 				while (c != '#')
-				{
 					c = fgetc(f);
-				}
-				// now c == '#'
+				// # was found
 				buf.Clear();
 				GetDirective(f);
-				if (buf == String("endif"))
-					--ifNumber;
-				else if ((buf == String("ifndef")) || (buf == String("ifdef")))
+				if ((buf == String("ifdef")) || (buf == String("ifndef")))
+				{
 					++ifNumber;
-				else if ((buf == String("endif") && (ifNumber == localIfNumber)))
+					++localIfNumber;
+				}
+				else if ((buf == String("endif")))
+				{
+					--ifNumber;
+					--localIfNumber;
+				}
+				else if ((buf == String("else")) && (localIfNumber == 1))
 					break;
 				else
-					c = fgetc(f);
+					throw "a";
 
 			}
 		}
 		break;
+		
 
 	case PP_ENDIF:
 		--ifNumber;
@@ -289,7 +301,29 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 		break;
 
 	case PP_ELSE:
-		throw "a"; //i cant come here because else is handled in the IF cases
-
+		localIfNumber = 1;
+		while ((c != EOF) && (localIfNumber > 0))
+		{
+			c = fgetc(f);
+			while (c != '#')
+				c = fgetc(f);
+			// # was found
+			buf.Clear();
+			GetDirective(f);
+			if ((buf == String("ifdef")) || (buf == String("ifndef")))
+			{
+				++ifNumber;
+				++localIfNumber;
+			}
+			else if ((buf == String("endif")))
+			{
+				--ifNumber;
+				--localIfNumber;
+			}
+			else
+				throw "a";
+		}
+		break;
+		
 	}
 }
