@@ -62,7 +62,7 @@ public:
 
 	Lexeme(LexemeType type = LEXEME_VOID, int value = 0) : type(type), value(value) {}
 
-	void Change(LexemeType type = LEXEME_VOID, int value = 0)
+	/*void Change(LexemeType type = LEXEME_VOID, int value = 0)
 	{
 		this->type = type;
 		this->value = value;
@@ -76,6 +76,11 @@ public:
 	int GetValue() const
 	{
 		return value;
+	} */
+
+	bool operator==(Lexeme const& other)
+	{
+		return (type == other.type) && (value == other.value);
 	}
 };
 
@@ -144,7 +149,10 @@ public:
 	}
 	~LexemeTable()
 	{
-		delete[] ptr;
+		if(size == 1)
+			delete ptr;
+		else
+			delete[] ptr;
 	}
 
 	void Push(Lexeme const& lex)
@@ -203,7 +211,10 @@ public:
 	}
 	~IdentTable()
 	{
-		delete[] ptr;
+		if(size == 1)
+			delete ptr;
+		else
+			delete[] ptr;
 	}
 
 	void Push(Identifier const& ident)

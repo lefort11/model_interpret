@@ -1,24 +1,34 @@
 #pragma once
 
 #include <iostream>
+#include "tests/testing.h"
 
 using namespace std;
 
 class String
 {
 	char* str;
-	int length;
-	int bufSize;
+	size_t length;
+	size_t bufSize;
 
 public:
 
 	String(const char* source = nullptr)
 	{
-		length = strlen(source);
-		str = new char[length+1];
-		strcpy(str, source);
-		str[length] = '\0';
-		bufSize = length + 1;
+		if(source != nullptr)
+		{
+			length = strlen(source);
+			str = new char[length + 1];
+			strcpy(str, source);
+			str[length] = '\0';
+			bufSize = length + 1;
+		}
+		else
+		{
+			length = 0;
+			str = nullptr;
+			bufSize = 0;
+		}
 	}
 
 	/*String(char* source = nullptr)
@@ -41,15 +51,24 @@ public:
 
 	String(String const& other)
 	{
-		length = other.length;
-		str = new char[other.bufSize];
-		strcpy(str, other.str);
-		for (int i = length; i < other.bufSize; ++i)
-			str[i] = '\0';
-		bufSize = other.bufSize;
+		if(other.str != nullptr)
+		{
+			length = other.length;
+			str = new char[other.bufSize];
+			strcpy(str, other.str);
+			for (auto i = length; i < other.bufSize; ++i)
+				str[i] = '\0';
+			bufSize = other.bufSize;
+		}
+		else
+		{
+			length = 0;
+			bufSize = 0;
+			str = nullptr;
+		}
 	}
 
-	String(int size, int fictive)
+	String(size_t size, int fictive)
 	{
 		bufSize = size;
 		length = 0;
@@ -72,7 +91,7 @@ public:
 			length = other.length;
 			str = new char[other.bufSize];
 			strcpy(str, other.str);
-			for (int i = length; i < other.bufSize; ++i)
+			for (auto i = length; i < other.bufSize; ++i)
 				str[i] = '\0';
 			bufSize = other.bufSize;
 		}
@@ -107,7 +126,12 @@ public:
 
 	bool operator==(String const& other) const
 	{
-		return strcmp(str, other.str);
+		return strcmp(str, other.str) == 0;
+	}
+
+	bool operator!=(String const& other) const
+	{
+		return strcmp(str, other.str) != 0;
 	}
 
 
@@ -118,16 +142,29 @@ public:
 		delete[] str;
 	}
 
-	operator char*() const
+	/*operator char*() const
 	{
 		return str;
-	}
+	} */
 
 	operator const char*() const
 	{
 		return str;
 	}
 
+	bool IsEmpty() const
+	{
+		return strcmp(str, "") == 0;
+	}
+
+	size_t GetLength() const
+	{
+		return length;
+	}
+	size_t GetBufSize() const
+	{
+		return bufSize;
+	}
 };
 
 inline ostream& operator<<(ostream& s, String const& string)

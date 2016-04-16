@@ -19,13 +19,13 @@ enum PPLexemeType
 
 class Preprocessor
 {
-	enum PPState
+	/*enum PPState
 	{
 		//PP_START,
 		PP_KEYWORD,
 		PP_NAME,
 		PP_HANDLER
-	};
+	};*/
 
 	static const PPLexemeType PPLexemes[];
 	static const char* PPWords[];
@@ -37,7 +37,7 @@ class Preprocessor
 
 	int c;
 	String buf;
-	PPState state;
+	//PPState state;
 	
 public:
 	static int GetIfNumber()
@@ -47,7 +47,7 @@ public:
 
 	static PPLexemeType IsPPWord(const char* word);
 
-	Preprocessor() : c(0), buf(10, 0), state(PP_KEYWORD) {}
+	Preprocessor() : c(0), buf(10, 0) {}
 
 	void Handler(FILE* f, IdentTable& identTable, int& lastIdent); //return int here?
 
@@ -65,16 +65,11 @@ public:
 inline list<String>::iterator Preprocessor::IsDefined(String name)
 {
 	list<String>::iterator it = defined.begin();
-	while( (it != defined.end()) )
-	{
-		if ((*it) == name)
-			return it;
+	while( (it != defined.end()) && ((*it) != name))
 		++it;
-	}
 	return it;
 }
 
-int ifNumber = 0;
 
 const PPLexemeType Preprocessor::PPLexemes[] =
 {
@@ -107,7 +102,7 @@ inline PPLexemeType Preprocessor::IsPPWord(const char* word)
 	int i = 1;
 	while(PPWords[i] != nullptr)
 	{
-		if (strcmp(word, PPWords[i]))
+		if (!strcmp(word, PPWords[i]))
 			return PPLexemes[i];
 		++i;
 	}
@@ -183,7 +178,7 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 
 	case PP_DEFINE:
 		//now identifier should be read
-		state = PP_NAME;
+		//state = PP_NAME;
 		//#define asd 213
 		if (c != ' ')
 			throw "a";
@@ -310,12 +305,12 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 			// # was found
 			buf.Clear();
 			GetDirective(f);
-			if ((buf == String("ifdef")) || (buf == String("ifndef")))
+			if ((buf == String("ifdef")) || (buf == String("ifndef"))) //attention !
 			{
 				++ifNumber;
 				++localIfNumber;
 			}
-			else if ((buf == String("endif")))
+			else if ((buf == String("endif"))) //attention !
 			{
 				--ifNumber;
 				--localIfNumber;

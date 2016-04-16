@@ -4,6 +4,7 @@
 
 using namespace std;
 
+int Preprocessor::ifNumber = 0;
 
 
 class Scanner
@@ -170,7 +171,7 @@ LexemeType Scanner::IsReserved(const char* word)
 	int i = 1;
 	while(WordTable[i] != nullptr)
 	{
-		if(strcmp(word, WordTable[i]))
+		if(!strcmp(word, WordTable[i]))
 			return LexemeWords[i];
 		++i;
 	}
@@ -182,7 +183,7 @@ LexemeType Scanner::IsDelimiter(const char* word)
 	int i = 1;
 	while(DelimiterTable[i] !=  nullptr)
 	{
-		if(strcmp(word, DelimiterTable[i]))
+		if(!strcmp(word, DelimiterTable[i]))
 			return LexemeDelimiters[i];
 		++i;
 	}
