@@ -298,6 +298,8 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 		break;
 
 	case PP_ELSE:
+		// сюда можно попасть только если if ветка не была пропущена
+		// так как если if ветка пропускается, то else директива обрабатывается сразу
 		localIfNumber = 1;
 		while ((c != EOF) && (localIfNumber > 0))
 		{
