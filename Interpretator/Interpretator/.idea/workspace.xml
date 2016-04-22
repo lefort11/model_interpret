@@ -34,7 +34,7 @@
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="75">
               <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
               <folding />
             </state>
@@ -44,7 +44,7 @@
       <file leaf-file-name="Lexeme.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Lexeme.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1530">
+            <state relative-caret-position="709">
               <caret line="109" column="120" selection-start-line="109" selection-start-column="120" selection-end-line="109" selection-end-column="120" />
               <folding />
             </state>
@@ -54,18 +54,18 @@
       <file leaf-file-name="String.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/String.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
+            <state relative-caret-position="540">
               <caret line="62" column="12" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scanner.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Scanner.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scanner.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="384" column="117" selection-start-line="384" selection-start-column="117" selection-end-line="384" selection-end-column="117" />
+            <state relative-caret-position="574">
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding>
                 <element signature="e#14#33#0" expanded="true" />
               </folding>
@@ -76,20 +76,21 @@
       <file leaf-file-name="Scanner-tests.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/Scanner-tests.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+            <state relative-caret-position="649">
+              <caret line="134" column="6" selection-start-line="134" selection-start-column="6" selection-end-line="134" selection-end-column="6" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
+                <element signature="e#59#6751#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.txt" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/test.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+            <state relative-caret-position="210">
+              <caret line="14" column="19" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -111,8 +112,8 @@
         <option value="$PROJECT_DIR$/Lexeme.h" />
         <option value="$PROJECT_DIR$/String.h" />
         <option value="$PROJECT_DIR$/tests/test.txt" />
-        <option value="$PROJECT_DIR$/tests/Scanner-tests.cpp" />
         <option value="$PROJECT_DIR$/Scanner.h" />
+        <option value="$PROJECT_DIR$/tests/Scanner-tests.cpp" />
       </list>
     </option>
   </component>
@@ -431,23 +432,64 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Scanner.h</url>
-          <line>192</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Scanner.h</url>
-          <line>204</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lexeme.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1635">
+          <caret line="109" column="120" selection-start-line="109" selection-start-column="120" selection-end-line="109" selection-end-column="120" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/String.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="62" column="12" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scanner.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#14#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/Scanner-tests.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#59#6751#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -478,7 +520,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -511,7 +552,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -558,7 +598,7 @@
     <entry file="file://$PROJECT_DIR$/Scanner.cpp" />
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="75">
           <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
           <folding />
         </state>
@@ -590,7 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -605,47 +644,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test.txt">
+    <entry file="file://$PROJECT_DIR$/Lexeme.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        <state relative-caret-position="709">
+          <caret line="109" column="120" selection-start-line="109" selection-start-column="120" selection-end-line="109" selection-end-column="120" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/String.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
+        <state relative-caret-position="540">
           <caret line="62" column="12" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Lexeme.h">
+    <entry file="file://$PROJECT_DIR$/Scanner.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="109" column="120" selection-start-line="109" selection-start-column="120" selection-end-line="109" selection-end-column="120" />
-          <folding />
+        <state relative-caret-position="574">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding>
+            <element signature="e#14#33#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/Scanner-tests.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+        <state relative-caret-position="649">
+          <caret line="134" column="6" selection-start-line="134" selection-start-column="6" selection-end-line="134" selection-end-column="6" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#59#6751#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scanner.h">
+    <entry file="file://$PROJECT_DIR$/tests/test.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="384" column="117" selection-start-line="384" selection-start-column="117" selection-end-line="384" selection-end-column="117" />
-          <folding>
-            <element signature="e#14#33#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="210">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>

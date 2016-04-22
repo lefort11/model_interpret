@@ -8,13 +8,13 @@ program
 	{
 	    read(y);
 	    write(y);
-	    write(x+y+z,c)
+	    write(x+y+z,c);
 	}
 	else
-	    c = a = 21;
+	    c = a = 21; /* dfgjdflkgjdlfgjldf slkdfjsldk skldgjsldkg*/
 	while (c > 100)
 	{
-	    c = c - 5;
+	    c = c /5;
 	    write(c);
 	    x = x + "step";
 	}

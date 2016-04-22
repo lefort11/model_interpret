@@ -42,11 +42,6 @@ class Scanner
 
 public:
 
-	int lIout() const
-	{
-		return lastIdent;
-	}
-
 	static LexemeTable lexemeTable;
 	static IdentTable identTable;
 
@@ -234,20 +229,6 @@ Lexeme Scanner::GetLexeme()
 					state = STATE_STRING_CONST;
 					GetChar();
 				}
-				/*else if (c == '{')
-				{
-					state = STATE_DELIMITER;
-					GetChar();
-					return Lexeme(LEXEME_LPARENTH, 0);
-				}
-				else if(c == '\n')
-				{
-					state = STATE_DELIMITER;
-				}
-				else if(c == EOF)
-				{
-					return Lexeme(LEXEME_END, 0);
-				}*/
 				else
 				{
 					state = STATE_DELIMITER;
@@ -274,6 +255,7 @@ Lexeme Scanner::GetLexeme()
 					//I think yes
 					Identifier id(INT_CONST, nullptr, atoi(buf), 0, nullptr);
 					identTable.Push(id);
+					buf.Clear();
 					return Lexeme(LEXEME_INT_CONST, lastIdent++);
 				}
 				break;
@@ -291,6 +273,7 @@ Lexeme Scanner::GetLexeme()
 					state = STATE_DELIMITER;
 					Identifier id(REAL_CONST, nullptr, 0, atol(buf), nullptr);
 					identTable.Push(id);
+					buf.Clear();
 					return Lexeme(LEXEME_REAL_CONST, lastIdent++);
 				}
 				break;
@@ -307,6 +290,7 @@ Lexeme Scanner::GetLexeme()
 					state = STATE_START;
 					Identifier id(STRING_CONST, nullptr, 0, 0, buf);
 					identTable.Push(id);
+					buf.Clear();
 					return Lexeme(LEXEME_STRING_CONST, lastIdent++);
 				}
 				break;
@@ -329,6 +313,7 @@ Lexeme Scanner::GetLexeme()
 					LexemeType type = IsReserved(buf);
 					if(type != LEXEME_VOID) // it is a reserved word
 					{
+						buf.Clear();
 						return Lexeme(type, 0);
 					}
 					// it is an identifier
@@ -337,13 +322,16 @@ Lexeme Scanner::GetLexeme()
 					{
 						Identifier id(VOID, buf, 0, 0, nullptr);
 						identTable.Push(id);
+						buf.Clear();
 						return Lexeme(LEXEME_NAME, lastIdent++);
 					}
 					//return Lexeme(LEXEME_NAME, pos); //this should be corrected for Preprocessing
 					if (identTable[pos].GetType() == INT_CONST) //this name can be a defined name of some int constant
 					{
+						buf.Clear();
 						return Lexeme(LEXEME_INT_CONST, pos);
 					}
+					buf.Clear();
 					return Lexeme(LEXEME_NAME, pos);
 				}
 				break;
@@ -361,6 +349,7 @@ Lexeme Scanner::GetLexeme()
 					state = STATE_DELIMITER;
 					Identifier id(VOID, buf, 0, 0, nullptr);
 					identTable.Push(id);
+					buf.Clear();
 					return Lexeme(LEXEME_NAME, lastIdent++);
 				}
 				break;
@@ -379,14 +368,16 @@ Lexeme Scanner::GetLexeme()
 					else
 					{
 						state = STATE_START;
+						buf.Clear();
 						return Lexeme(LEXEME_DIVISION, 0);
 					}
 				}
-				if ((c == ' ') || isalpha(c) || isdigit(c) || (c == '"') || (c == '\n') || (c == '\r') || (c == '\t')) //getting of delimiter ended
+				else if ((c == ' ') || isalpha(c) || isdigit(c) || (c == '"') || (c == '\n') || (c == '\r') || (c == '\t') || (c == ';')) //getting of delimiter ended
 				{
 					//в данную ветку можно зайти по двум причинам:
 					//либо закончено считывание разделителя, тогда выполняется условие ниже
 					//либо просто попали сюда из других состояний для того чтобы пропустить пробелы и переводы строк
+					// ; является признаком окончания разделителя !!!!
 					if(!buf.IsEmpty()) //if there was a delimiter
 					{
 						LexemeType type = IsDelimiter(buf);
@@ -395,6 +386,7 @@ Lexeme Scanner::GetLexeme()
 						else
 						{
 							// !!!
+							buf.Clear();
 							return Lexeme(type, 0);
 						}
 					}
@@ -415,6 +407,14 @@ Lexeme Scanner::GetLexeme()
 					}
 					else if (c == '\r')
 						GetChar(); //'\n' will be next
+					else // c == ';'
+					{
+						state = STATE_START;
+						buf.Clear();
+						GetChar();
+						return Lexeme(LEXEME_SEMICOLON, 0);
+
+					}
 				}
 				else
 				{
@@ -426,6 +426,7 @@ Lexeme Scanner::GetLexeme()
 			case STATE_COMMENT:
 				while (c != '*')
 					GetChar();
+				GetChar();
 				if (c == '/')
 				{
 					GetChar();
@@ -455,7 +456,6 @@ void Scanner::MakeLexemeTable()
 	GetChar();
 	while(c != EOF)
 	{
-		buf.Clear();
 		lexemeTable.Push(GetLexeme());
 	}
 	if (PP.GetIfNumber() != 0)

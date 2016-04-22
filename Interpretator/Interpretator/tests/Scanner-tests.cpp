@@ -1,6 +1,9 @@
 #include "../Scanner.h"
 #include "testing.h"
 
+
+#ifdef kek
+
 /*TEST(GetLexemeTest)
 		{
 			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpretator/Interpretator/tests/test.txt");
@@ -61,11 +64,72 @@ TEST(MakeLexemeTableTest)
 			assert(Scanner::lexemeTable[44] == LEXEME_LPARENTH);
 
 			assert(Scanner::lexemeTable[45] == LEXEME_READ);
-			//cout << Scanner::lexemeTable[46].GetType() << endl;
 			assert(Scanner::lexemeTable[46] == LEXEME_LBRACKET);
 			assert(Scanner::lexemeTable[47] == Lexeme(LEXEME_NAME, 7));
-			//cout << Scanner::lexemeTable[47].GetType() << endl;
-			//cout << Scanner::lexemeTable[47].GetValue() << endl;
 			assert(Scanner::lexemeTable[48] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[49] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[50] == LEXEME_WRITE);
+			assert(Scanner::lexemeTable[51] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[52] == Lexeme(LEXEME_NAME, 7));
+			assert(Scanner::lexemeTable[53] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[54] == LEXEME_SEMICOLON);
+
+			assert(Scanner::lexemeTable[55] == LEXEME_WRITE);
+			assert(Scanner::lexemeTable[56] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[57] == Lexeme(LEXEME_NAME, 5));
+			assert(Scanner::lexemeTable[58] == LEXEME_PLUS);
+			assert(Scanner::lexemeTable[59] == Lexeme(LEXEME_NAME, 7));
+			assert(Scanner::lexemeTable[60] == LEXEME_PLUS);
+			assert(Scanner::lexemeTable[61] == Lexeme(LEXEME_NAME, 8));
+			assert(Scanner::lexemeTable[62] == LEXEME_COMMA);
+			assert(Scanner::lexemeTable[63] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[64] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[65] == LEXEME_SEMICOLON);
+
+			assert(Scanner::lexemeTable[66] == LEXEME_RPARENTH);
+			assert(Scanner::lexemeTable[67] == LEXEME_ELSE);
+
+			assert(Scanner::lexemeTable[68] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[69] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[70] == Lexeme(LEXEME_NAME, 0));
+			assert(Scanner::lexemeTable[71] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[72] == Lexeme(LEXEME_INT_CONST, 12)); //21
+			assert(Scanner::lexemeTable[73] == LEXEME_SEMICOLON);
+
+			assert(Scanner::lexemeTable[74] == LEXEME_WHILE);
+			assert(Scanner::lexemeTable[75] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[76] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[77] == LEXEME_MORE);
+			assert(Scanner::lexemeTable[78] == Lexeme(LEXEME_INT_CONST, 13)); // 100
+			assert(Scanner::lexemeTable[79] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[80] == LEXEME_LPARENTH);
+			assert(Scanner::lexemeTable[81] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[82] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[83] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[84] == LEXEME_DIVISION);
+			assert(Scanner::lexemeTable[85] == Lexeme(LEXEME_INT_CONST, 14)); //5
+			assert(Scanner::lexemeTable[86] == LEXEME_SEMICOLON);
+
+			assert(Scanner::lexemeTable[87] == LEXEME_WRITE);
+			assert(Scanner::lexemeTable[88] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[89] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[90] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[91] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[92] == Lexeme(LEXEME_NAME, 5));
+			assert(Scanner::lexemeTable[93] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[94] == Lexeme(LEXEME_NAME, 5));
+			assert(Scanner::lexemeTable[95] == LEXEME_PLUS);
+			assert(Scanner::lexemeTable[96] == Lexeme(LEXEME_STRING_CONST, 15)); //"step"
+			assert(Scanner::lexemeTable[97] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[98] == LEXEME_RPARENTH);
+			assert(Scanner::lexemeTable[99] == LEXEME_WRITE);
+			assert(Scanner::lexemeTable[100] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[101] == Lexeme(LEXEME_NAME, 5));
+			assert(Scanner::lexemeTable[102] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[103] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[104] == LEXEME_RPARENTH);
+			assert(Scanner::lexemeTable[105] == LEXEME_END);
 
 		};
+
+#endif
