@@ -45,7 +45,7 @@ public:
 		return ifNumber;
 	}
 
-	static PPLexemeType IsPPWord(const char* word);
+	static PPLexemeType IsPPWord(String const& word);
 
 	Preprocessor() : c(0), buf(10, 0) {}
 
@@ -89,7 +89,7 @@ const char* Preprocessor::PPWords[] =
 	"define",
 	"undef",
 	"ifdef",
-	"ifndef"
+	"ifndef",
 	"else",
 	"endif",
 	nullptr
@@ -97,13 +97,15 @@ const char* Preprocessor::PPWords[] =
 
 
 
-inline PPLexemeType Preprocessor::IsPPWord(const char* word)
+inline PPLexemeType Preprocessor::IsPPWord(String const& word)
 {
 	int i = 1;
 	while(PPWords[i] != nullptr)
 	{
-		if (!strcmp(word, PPWords[i]))
+		if (word == String(PPWords[i]))
+		{
 			return PPLexemes[i];
+		}
 		++i;
 	}
 	return PP_VOID;
@@ -114,7 +116,7 @@ inline PPLexemeType Preprocessor::IsPPWord(const char* word)
 inline void Preprocessor::GetDirective(FILE* f) 
 {
 	c = fgetc(f);
-	while((c != ' ') || (c != '\n') || (c != '\r'))
+	while((c != ' ') && (c != '\n') && (c != '\r') && (c != EOF))
 	{
 		buf += c;
 		c = fgetc(f);
@@ -132,7 +134,7 @@ inline String Preprocessor::ReadIdent(FILE* f)
 		c = fgetc(f);
 	}
 	//now digits are coming
-	if (buf == String(""))
+	if (buf.IsEmpty())
 		throw "a";
 	while(isdigit(c))
 	{
@@ -183,10 +185,10 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 		if (c != ' ')
 			throw "a";
 		idName = ReadIdent(f);
-		position = identTable.Search(buf);
+		position = identTable.Search(idName);
 		if(position == -1)
 		{
-			Identifier id(INT_CONST, buf, ReadNumb(f), 0, nullptr);
+			Identifier id(INT_CONST, idName, ReadNumb(f), 0, nullptr);
 			identTable.Push(id);
 			++lastIdent;
 		}

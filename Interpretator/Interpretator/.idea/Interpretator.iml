@@ -6,10 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/String.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/preprocessor.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/Lexeme-tests.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests/testing.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/Scanner-tests.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/String-tests.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Preprocessor-tests.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Lexeme.h" isTestSource="false" />
     </content>

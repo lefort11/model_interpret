@@ -234,6 +234,7 @@ Lexeme Scanner::GetLexeme()
 					state = STATE_DELIMITER;
 				}
 
+
 				break;
 
 			case STATE_CONSTANT:
@@ -416,6 +417,11 @@ Lexeme Scanner::GetLexeme()
 
 					}
 				}
+				else if(c == '#')
+				{
+					state = STATE_PREPROCESSOR;
+					//GetChar();
+				}
 				else
 				{
 					buf += c;
@@ -461,3 +467,4 @@ void Scanner::MakeLexemeTable()
 	if (PP.GetIfNumber() != 0)
 		throw "a";
 }
+
