@@ -63,8 +63,8 @@ public:
 		else
 		{
 			length = 0;
-			bufSize = 0;
-			str = nullptr;
+			bufSize = other.bufSize;
+			str = new char[other.bufSize];
 		}
 	}
 
@@ -79,21 +79,26 @@ public:
 
 	String& operator=(String const& other)
 	{
-		/*if(this != &other)
-		{
-			this->~String();
-			new(this) String(other);
-		}
-		return (*this); */
+
 		if(this != &other)
 		{
-			delete[] str;
-			length = other.length;
-			str = new char[other.bufSize];
-			strcpy(str, other.str);
-			for (auto i = length; i < other.bufSize; ++i)
-				str[i] = '\0';
-			bufSize = other.bufSize;
+			if(other.str != nullptr)
+			{
+				delete[] str;
+				length = other.length;
+				str = new char[other.bufSize];
+				strcpy(str, other.str);
+				for (auto i = length; i < other.bufSize; ++i)
+					str[i] = '\0';
+				bufSize = other.bufSize;
+			}
+			else
+			{
+				delete[] str;
+				length = 0;
+				bufSize = other.bufSize;
+				str = nullptr;
+			}
 		}
 		return (*this);
 	}
@@ -114,6 +119,7 @@ public:
 		else
 		{
 			strcat(str, other.str);
+			length += other.length;
 		}
 		return (*this);
 	}
@@ -139,7 +145,8 @@ public:
 
 	~String()
 	{
-		delete[] str;
+		if(str != nullptr)
+			delete[] str;
 	}
 
 	/*operator char*() const

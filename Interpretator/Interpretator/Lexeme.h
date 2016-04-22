@@ -14,39 +14,39 @@ enum LexemeType
 	LEXEME_STRING_CONST,
 	LEXEME_REAL_CONST,
 
-	LEXEME_IF, //6
+	LEXEME_IF,
 	LEXEME_ELSE,
 	LEXEME_FOR,
 	LEXEME_WHILE,
 	LEXEME_BREAK,
 	LEXEME_GOTO,
 	LEXEME_READ,
-	LEXEME_WRITE, //13
+	LEXEME_WRITE,
 
 	LEXEME_NOT,
 	LEXEME_AND,
-	LEXEME_OR, //16
+	LEXEME_OR,
 
 	LEXEME_PLUS,
 	LEXEME_MINUS,
 	LEXEME_MULTIPLE,
-	LEXEME_DIVISION, //20
+	LEXEME_DIVISION,
 	LEXEME_SEMICOLON,
 	LEXEME_LBRACKET,
 	LEXEME_RBRACKET,
 	LEXEME_LPARENTH,
-	LEXEME_RPARENTH, //25
-	LEXEME_COMMA, //26
+	LEXEME_RPARENTH,
+	LEXEME_COMMA,
 	LEXEME_MORE,
 	LEXEME_LESS,
 	LEXEME_LESS_OR_EQUAL,
-	LEXEME_MORE_OR_EQUAL, //30
+	LEXEME_MORE_OR_EQUAL,
 	LEXEME_EQUAL,
 	LEXEME_NOT_EQUAL,
 	LEXEME_ASSIGNMENT,
 	LEXEME_COLON,
 	LEXEME_APOSTROPHE,
-	LEXEME_QUOTE, //36
+	LEXEME_QUOTE,
 	LEXEME_POINT,
 
 	LEXEME_NAME,
@@ -62,7 +62,7 @@ public:
 
 	Lexeme(LexemeType type = LEXEME_VOID, int value = 0) : type(type), value(value) {}
 
-	/*void Change(LexemeType type = LEXEME_VOID, int value = 0)
+	void Change(LexemeType type = LEXEME_VOID, int value = 0)
 	{
 		this->type = type;
 		this->value = value;
@@ -76,11 +76,11 @@ public:
 	int GetValue() const
 	{
 		return value;
-	} */
+	}
 
 	bool operator==(Lexeme const& other)
 	{
-		return (type == other.type) && (value == other.value);
+		return ((type == other.type) && (value == other.value));
 	}
 };
 
@@ -107,9 +107,9 @@ class Identifier
 
 public:
 	Identifier(): type(VOID), name(nullptr), intValue(0), realValue(0), stringValue(nullptr) {}
-	Identifier(IdentType type, String name, int intv, float floatv, String stringv): type(type), name(name), intValue(intv), realValue(floatv), stringValue(stringv) {}
+	Identifier(IdentType type, String const& name, int intv, float floatv, String const& stringv): type(type), name(name), intValue(intv), realValue(floatv), stringValue(stringv) {}
 
-	String& GetName()
+	String const& GetName() const
 	{
 		return name;
 	}
@@ -119,7 +119,7 @@ public:
 		intValue = v;
 	}
 
-	void ChangeName(String newName)
+	void ChangeName(String const& newName)
 	{
 		name = newName;
 	}
@@ -169,7 +169,10 @@ public:
 				temp[i] = ptr[i];
 			}
 			temp[size] = lex;
-			delete[] ptr;
+			if(size == 1)
+				delete ptr;
+			else
+				delete[] ptr;
 			ptr = temp;
 		}
 		++size;
@@ -231,7 +234,10 @@ public:
 				temp[i] = ptr[i];
 			}
 			temp[size] = ident;
-			delete[] ptr;
+			if(size == 1)
+				delete ptr;
+			else
+				delete[] ptr;
 			ptr = temp;
 		}
 		++size;
@@ -247,12 +253,24 @@ public:
 		return ptr[i];
 	}
 
-	int Search(const char* string) const
+	int Search(String string) const
 	{
 		for (int i = 0; i < size; ++i)
-			if ( ptr[i].GetName() == String(string) )
+		{
+			if (ptr[i].GetName() == string)
+			{
 				return i;
+			}
+		}
 		return -1;
+	}
+
+	void Out() const
+	{
+		for(int i = 0; i < size; ++i)
+		{
+			cout << ptr[i].GetName() << endl;
+		}
 	}
 
 

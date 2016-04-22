@@ -1,6 +1,8 @@
 #include "testing.h"
 #include "../String.h"
 
+#ifdef kek
+
 TEST(stringEquals)
 		{
 			String string1 = "hui";
@@ -50,3 +52,5 @@ TEST(stringAssignOperator)
 			string1.Clear();
 			assert(string2 == String("OLEG HUI"));
 		};
+
+#endif
