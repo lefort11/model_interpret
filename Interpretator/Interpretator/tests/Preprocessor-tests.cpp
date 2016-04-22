@@ -1,7 +1,7 @@
 #include "../Scanner.h"
 #include "testing.h"
 
-TEST(PPTest)
+/*TEST(PPTest)
 		{
 			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpretator/Interpretator/tests/test1.txt");
 			scanner.MakeLexemeTable();
@@ -120,10 +120,66 @@ TEST(PPTest)
 			assert(Scanner::lexemeTable[74] == LEXEME_RPARENTH);
 			assert(Scanner::lexemeTable[75] == LEXEME_END);
 			};
+			*/
 
 TEST(PPtest2)
 		{
 			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpretator/Interpretator/tests/test2.txt");
 			scanner.MakeLexemeTable();
-
+			assert(Scanner::lexemeTable[0] == LEXEME_PROGRAM);
+			assert(Scanner::lexemeTable[1] == LEXEME_LPARENTH);
+			assert(Scanner::lexemeTable[2] == LEXEME_INT);
+			assert(Scanner::lexemeTable[3] == Lexeme(LEXEME_NAME, 1)); //a
+			assert(Scanner::lexemeTable[4] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[5] == Lexeme(LEXEME_INT_CONST, 2)); //51
+			assert(Scanner::lexemeTable[6] == LEXEME_COMMA);
+			assert(Scanner::lexemeTable[7] == Lexeme(LEXEME_NAME, 3)); //b
+			assert(Scanner::lexemeTable[8] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[9] == Lexeme(LEXEME_INT_CONST, 0)); //6
+			assert(Scanner::lexemeTable[10] == LEXEME_COMMA);
+			assert(Scanner::lexemeTable[11] == Lexeme(LEXEME_NAME, 4)); //c
+			assert(Scanner::lexemeTable[12] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[13] == LEXEME_STRING);
+			assert(Scanner::lexemeTable[14] == Lexeme(LEXEME_NAME, 5)); //x
+			assert(Scanner::lexemeTable[15] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[16] == Lexeme(LEXEME_STRING_CONST, 6)); //abc
+			assert(Scanner::lexemeTable[17] == LEXEME_COMMA);
+			assert(Scanner::lexemeTable[18] == Lexeme(LEXEME_NAME, 7)); //y
+			assert(Scanner::lexemeTable[19] == LEXEME_COMMA);
+			assert(Scanner::lexemeTable[20] == Lexeme(LEXEME_NAME, 8)); //z
+			assert(Scanner::lexemeTable[21] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[22] == Lexeme(LEXEME_STRING_CONST, 9)); //abcd
+			assert(Scanner::lexemeTable[23] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[24] == LEXEME_LPARENTH);
+			assert(Scanner::lexemeTable[25] == LEXEME_READ);
+			assert(Scanner::lexemeTable[26] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[27] == Lexeme(LEXEME_NAME, 7));
+			assert(Scanner::lexemeTable[28] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[29] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[30] == LEXEME_WRITE);
+			assert(Scanner::lexemeTable[31] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[32] == Lexeme(LEXEME_NAME, 5));
+			assert(Scanner::lexemeTable[33] == LEXEME_PLUS);
+			assert(Scanner::lexemeTable[34] == Lexeme(LEXEME_NAME, 7));
+			assert(Scanner::lexemeTable[35] == LEXEME_PLUS);
+			assert(Scanner::lexemeTable[36] == Lexeme(LEXEME_NAME, 8));
+			assert(Scanner::lexemeTable[37] == LEXEME_COMMA);
+			assert(Scanner::lexemeTable[38] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[39] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[40] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[41] == LEXEME_RPARENTH);
+			assert(Scanner::lexemeTable[42] == LEXEME_ELSE);
+			assert(Scanner::lexemeTable[43] == Lexeme(LEXEME_NAME, 4));
+			assert(Scanner::lexemeTable[44] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[45] == Lexeme(LEXEME_NAME, 1));
+			assert(Scanner::lexemeTable[46] == LEXEME_ASSIGNMENT);
+			assert(Scanner::lexemeTable[47] == Lexeme(LEXEME_INT_CONST, 10)); //21
+			assert(Scanner::lexemeTable[48] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[49] == LEXEME_WRITE);
+			assert(Scanner::lexemeTable[50] == LEXEME_LBRACKET);
+			assert(Scanner::lexemeTable[51] == Lexeme(LEXEME_NAME, 5));
+			assert(Scanner::lexemeTable[52] == LEXEME_RBRACKET);
+			assert(Scanner::lexemeTable[53] == LEXEME_SEMICOLON);
+			assert(Scanner::lexemeTable[54] == LEXEME_RPARENTH);
+			assert(Scanner::lexemeTable[55] == LEXEME_END);
 		};

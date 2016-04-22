@@ -1,0 +1,37 @@
+#define KEK 5
+program
+{
+	int a = 51, b = KEK, c;
+	string x = "abc", y, z = "abcd";
+#ifdef KEKASD
+    asdlsjdlgks
+	c = (a + b) * 2.1;
+	if(c >= 100 or x == z)
+#else
+	{
+	    read(y);
+	    #ifndef KEK
+
+	    write(y);
+
+	    #else
+
+	    write(x+y+z,c);
+
+	    #endif
+	}
+	#ifdef KEK
+	else
+	    c = a = 21; /* dfgjdflkgjdlfgjldf slkdfjsldk skldgjsldkg*/
+	#else
+	while (c > 100)
+	{
+	    c = c /5;
+	    write(c);
+	    x = x + "step";
+	}
+	#endif
+	write(x);
+#endif
+}
+
