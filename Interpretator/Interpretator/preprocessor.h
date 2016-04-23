@@ -173,7 +173,6 @@ inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent
 {
 	// firstly a directive should be read
 	GetDirective(f);
-	PPException ppExcpt;
 	int position;
 	PPLexemeType type = IsPPWord(buf);
 	list<String>::iterator it;
@@ -181,14 +180,14 @@ inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent
 	switch(type)
 	{
 	case PP_VOID:
-		throw ppExcpt;
+		throw PPException();
 
 	case PP_DEFINE:
 		//now identifier should be read
 		//state = PP_NAME;
 		//#define asd 213
 		if (c != ' ')
-			throw ppExcpt;
+			throw PPException();
 		ReadIdent(f);
 		position = identTable.Search(buf); // ~ IsDefined()
 		if(position == -1)
@@ -206,11 +205,11 @@ inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent
 
 	case PP_UNDEF:
 		if (c != ' ')
-			throw ppExcpt;
+			throw PPException();
 		ReadIdent(f);
 		it = IsDefined(buf);
 		if (it == defined.end()) // not found => error
-			throw ppExcpt;
+			throw PPException();
 		defined.erase(it); //deleting from defined list
 		position = identTable.Search(buf);
 		identTable[position].ChangeName(nullptr); //renaming of named constant to make defining again possible
@@ -242,7 +241,7 @@ inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent
 				else if ((buf == String("else")) && (localIfNumber == 1))
 					break;
 				else
-					throw ppExcpt;
+					throw PPException();
 
 			}
 		}
@@ -275,7 +274,7 @@ inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent
 				else if ((buf == "else") && (localIfNumber == 1))
 					break;
 				else
-					throw ppExcpt;
+					throw PPException();
 
 			}
 		}
@@ -285,7 +284,7 @@ inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent
 	case PP_ENDIF:
 		--ifNumber;
 		if (ifNumber < 0)
-			throw ppExcpt;
+			throw PPException();
 		break;
 
 	case PP_ELSE:
@@ -310,7 +309,7 @@ inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent
 				--localIfNumber;
 			}
 			else
-				throw ppExcpt;
+				throw PPException();
 		}
 		break;
 		

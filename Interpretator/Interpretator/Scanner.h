@@ -51,8 +51,7 @@ public:
 	{
 		if(file == NULL)
 		{
-			ScannerException excpt;
-			throw excpt;
+			throw ScannerException();
 		}
 	}
 
@@ -451,8 +450,7 @@ inline Lexeme Scanner::GetLexeme()
 				break;
 
 			case STATE_ERROR:
-				ScannerException ex;
-				throw ex;
+				throw ScannerException();
 		}
 	}
 	return Lexeme(LEXEME_END, 0);
@@ -468,8 +466,7 @@ void Scanner::MakeLexemeTable()
 	}
 	if (PP.GetIfNumber() != 0)
 	{
-		Preprocessor::PPException ppExcpt;
-		throw ppExcpt;
+		throw Preprocessor::PPException();
 	}
 }
 
