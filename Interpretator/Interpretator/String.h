@@ -31,14 +31,6 @@ public:
 		}
 	}
 
-	/*String(char* source = nullptr)
-	{
-		length = strlen(source);
-		str = new char[length + 1];
-		strcpy(str, source);
-		str[length] = '\0';
-		bufSize = length + 1;
-	} */
 
 	String(char c)
 	{
@@ -68,13 +60,13 @@ public:
 		}
 	}
 
-	String(size_t size, int fictive)
+	String(size_t size, char ch)
 	{
 		bufSize = size;
 		length = 0;
 		str = new char[bufSize];
 		for (int i = 0; i < bufSize; ++i)
-			str[i] = '\0';
+			str[i] = ch;
 	}
 
 	String& operator=(String const& other)
@@ -149,12 +141,7 @@ public:
 			delete[] str;
 	}
 
-	/*operator char*() const
-	{
-		return str;
-	} */
-
-	operator const char*() const
+	const char* GetPtr() const
 	{
 		return str;
 	}

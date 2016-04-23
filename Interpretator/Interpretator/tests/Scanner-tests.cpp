@@ -2,7 +2,6 @@
 #include "testing.h"
 
 
-#ifdef kek
 
 /*TEST(GetLexemeTest)
 		{
@@ -132,4 +131,3 @@ TEST(MakeLexemeTableTest)
 
 		};
 
-#endif

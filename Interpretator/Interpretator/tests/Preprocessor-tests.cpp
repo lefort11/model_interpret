@@ -120,7 +120,8 @@
 			assert(Scanner::lexemeTable[74] == LEXEME_RPARENTH);
 			assert(Scanner::lexemeTable[75] == LEXEME_END);
 			};
-			*/
+*/
+
 
 TEST(PPtest2)
 		{

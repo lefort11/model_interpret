@@ -37,9 +37,10 @@ class Preprocessor
 
 	int c;
 	String buf;
-	//PPState state;
-	
+
 public:
+	class PPException{};
+
 	static int GetIfNumber()
 	{
 		return ifNumber;
@@ -49,11 +50,11 @@ public:
 
 	Preprocessor() : c(0), buf(10, 0) {}
 
-	void Handler(FILE* f, IdentTable& identTable, int& lastIdent); //return int here?
+	int Handler(FILE* f, IdentTable& identTable, int& lastIdent); //return int here?
 
 	void GetDirective(FILE* f);
 
-	String ReadIdent(FILE* f);
+	void ReadIdent(FILE* f);
 	
 	int ReadNumb(FILE* f);
 
@@ -96,13 +97,12 @@ const char* Preprocessor::PPWords[] =
 };
 
 
-
 inline PPLexemeType Preprocessor::IsPPWord(String const& word)
 {
 	int i = 1;
 	while(PPWords[i] != nullptr)
 	{
-		if (word == String(PPWords[i]))
+		if (word == PPWords[i])
 		{
 			return PPLexemes[i];
 		}
@@ -112,9 +112,9 @@ inline PPLexemeType Preprocessor::IsPPWord(String const& word)
 }
 
 
-
 inline void Preprocessor::GetDirective(FILE* f) 
 {
+	buf.Clear();
 	c = fgetc(f);
 	while((c != ' ') && (c != '\n') && (c != '\r') && (c != EOF))
 	{
@@ -123,11 +123,11 @@ inline void Preprocessor::GetDirective(FILE* f)
 	}
 }
 
-inline String Preprocessor::ReadIdent(FILE* f)
+inline void Preprocessor::ReadIdent(FILE* f)
 {
 	while (c == ' ')
 		c = fgetc(f);
-	String buf(10, 0);
+	buf.Clear();
 	while((c != ' ') && (c != '\n') && (c != '\r') && (isalpha(c)) && (c != EOF))
 	{
 		buf += c;
@@ -135,14 +135,17 @@ inline String Preprocessor::ReadIdent(FILE* f)
 	}
 	//now digits are coming
 	if (buf.IsEmpty())
-		throw "a";
+	{
+		PPException ppExcpt;
+		throw ppExcpt;
+	}
 	while(isdigit(c))
 	{
 		buf += c;
 		c = fgetc(f);
 	}
-	return buf;
 }
+
 
 inline int Preprocessor::ReadNumb(FILE* f)
 {
@@ -154,41 +157,43 @@ inline int Preprocessor::ReadNumb(FILE* f)
 		buf += c;
 		c = fgetc(f);
 	}
-	if (buf == String(""))
-		throw "a";
-	return atoi(buf);
+	if (buf.IsEmpty())
+	{
+		PPException ppExcept;
+		throw ppExcept;
+	}
+	return atoi(buf.GetPtr());
 }
 
 
 
 
 
-inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent)
+inline int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent)
 {
 	// firstly a directive should be read
-	buf.Clear();
 	GetDirective(f);
+	PPException ppExcpt;
 	int position;
-	String idName;
 	PPLexemeType type = IsPPWord(buf);
 	list<String>::iterator it;
 	int localIfNumber;
 	switch(type)
 	{
 	case PP_VOID:
-		throw "a";
+		throw ppExcpt;
 
 	case PP_DEFINE:
 		//now identifier should be read
 		//state = PP_NAME;
 		//#define asd 213
 		if (c != ' ')
-			throw "a";
-		idName = ReadIdent(f);
-		position = identTable.Search(idName);
+			throw ppExcpt;
+		ReadIdent(f);
+		position = identTable.Search(buf); // ~ IsDefined()
 		if(position == -1)
 		{
-			Identifier id(INT_CONST, idName, ReadNumb(f), 0, nullptr);
+			Identifier id(INT_CONST, buf, ReadNumb(f), 0, nullptr);
 			identTable.Push(id);
 			++lastIdent;
 		}
@@ -196,38 +201,26 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 		{
 			identTable[position].ChangeIntValue(ReadNumb(f));
 		}
-		defined.push_back(idName);
+		defined.push_back(buf);
 		break;
 
 	case PP_UNDEF:
 		if (c != ' ')
-			throw "a";
-		idName = ReadIdent(f);
-		it = IsDefined(idName);
-		/*it = defined.begin();
-		while(it != defined.end())
-		{
-			if( (*it) == idName )
-			{
-				defined.erase(it);
-				position = identTable.Search(idName);
-				identTable[position].ChangeName(nullptr);
-				break;
-			}
-			++it;
-		} */
+			throw ppExcpt;
+		ReadIdent(f);
+		it = IsDefined(buf);
 		if (it == defined.end()) // not found => error
-			throw "a";
+			throw ppExcpt;
 		defined.erase(it); //deleting from defined list
-		position = identTable.Search(idName);
+		position = identTable.Search(buf);
 		identTable[position].ChangeName(nullptr); //renaming of named constant to make defining again possible
 		break;
 
 	case PP_IFDEF:
 		localIfNumber = 1;
 		++ifNumber;
-		idName = ReadIdent(f); // c = ' ' or '\n' after that
-		if(IsDefined(idName) == defined.end())
+		ReadIdent(f); // c = ' ' or '\n' after that
+		if(IsDefined(buf) == defined.end())
 		{
 			while ((c != EOF) && (localIfNumber > 0))
 			{
@@ -235,7 +228,6 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 				while (c != '#')
 					c = fgetc(f);
 				// # was found
-				buf.Clear();
 				GetDirective(f);
 				if ((buf == String("ifdef")) || (buf == String("ifndef")))
 				{
@@ -250,7 +242,7 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 				else if ((buf == String("else")) && (localIfNumber == 1))
 					break;
 				else
-					throw "a";
+					throw ppExcpt;
 
 			}
 		}
@@ -260,8 +252,8 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 	case PP_IFNDEF:
 		localIfNumber = 1;
 		++ifNumber;
-		idName = ReadIdent(f); // c = ' ' or '\n' after that
-		if (IsDefined(idName) != defined.end())
+		ReadIdent(f); // c = ' ' or '\n' after that
+		if (IsDefined(buf) != defined.end())
 		{
 			while ((c != EOF) && (localIfNumber > 0))
 			{
@@ -269,22 +261,21 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 				while (c != '#')
 					c = fgetc(f);
 				// # was found
-				buf.Clear();
 				GetDirective(f);
-				if ((buf == String("ifdef")) || (buf == String("ifndef")))
+				if ((buf == "ifdef") || (buf == "ifndef"))
 				{
 					++ifNumber;
 					++localIfNumber;
 				}
-				else if ((buf == String("endif")))
+				else if ((buf == "endif"))
 				{
 					--ifNumber;
 					--localIfNumber;
 				}
-				else if ((buf == String("else")) && (localIfNumber == 1))
+				else if ((buf == "else") && (localIfNumber == 1))
 					break;
 				else
-					throw "a";
+					throw ppExcpt;
 
 			}
 		}
@@ -294,7 +285,7 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 	case PP_ENDIF:
 		--ifNumber;
 		if (ifNumber < 0)
-			throw "a";
+			throw ppExcpt;
 		break;
 
 	case PP_ELSE:
@@ -307,22 +298,22 @@ inline void Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIden
 			while (c != '#')
 				c = fgetc(f);
 			// # was found
-			buf.Clear();
 			GetDirective(f);
-			if ((buf == String("ifdef")) || (buf == String("ifndef"))) //attention !
+			if ((buf == "ifdef") || (buf == "ifndef")) //attention !
 			{
 				++ifNumber;
 				++localIfNumber;
 			}
-			else if ((buf == String("endif"))) //attention !
+			else if (buf == "endif") //attention !
 			{
 				--ifNumber;
 				--localIfNumber;
 			}
 			else
-				throw "a";
+				throw ppExcpt;
 		}
 		break;
 		
 	}
+	return c;
 }

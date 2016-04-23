@@ -56,9 +56,9 @@ public:
 		}
 	}
 
-	static LexemeType IsDelimiter(const char* word);
+	static LexemeType IsDelimiter(String const& word);
 
-	static LexemeType IsReserved(const char* word);
+	static LexemeType IsReserved(String const& word);
 
 	int GetChar()
 	{
@@ -179,24 +179,24 @@ const LexemeType Scanner::LexemeDelimiters[] =
 
 
 
-LexemeType Scanner::IsReserved(const char* word)
+inline LexemeType Scanner::IsReserved(String const& word)
 {
 	int i = 1;
 	while(WordTable[i] != nullptr)
 	{
-		if(!strcmp(word, WordTable[i]))
+		if(word == WordTable[i])
 			return LexemeWords[i];
 		++i;
 	}
 	return LEXEME_VOID;
 }
 
-LexemeType Scanner::IsDelimiter(const char* word)
+inline LexemeType Scanner::IsDelimiter(String const& word)
 {
 	int i = 1;
 	while(DelimiterTable[i] !=  nullptr)
 	{
-		if(!strcmp(word, DelimiterTable[i]))
+		if(word == DelimiterTable[i])
 			return LexemeDelimiters[i];
 		++i;
 	}
@@ -205,7 +205,7 @@ LexemeType Scanner::IsDelimiter(const char* word)
 
 
 
-Lexeme Scanner::GetLexeme()
+inline Lexeme Scanner::GetLexeme()
 {
 	while (c != EOF)
 	{
@@ -233,9 +233,8 @@ Lexeme Scanner::GetLexeme()
 				{
 					state = STATE_DELIMITER;
 				}
-
-
 				break;
+
 
 			case STATE_CONSTANT:
 				if (c == '.')
@@ -254,7 +253,7 @@ Lexeme Scanner::GetLexeme()
 					state = STATE_DELIMITER;
 					//Don't know should i to put const to ident table or not
 					//I think yes
-					Identifier id(INT_CONST, nullptr, atoi(buf), 0, nullptr);
+					Identifier id(INT_CONST, nullptr, atoi(buf.GetPtr()), 0, nullptr);
 					identTable.Push(id);
 					buf.Clear();
 					return Lexeme(LEXEME_INT_CONST, lastIdent++);
@@ -272,7 +271,7 @@ Lexeme Scanner::GetLexeme()
 				else
 				{
 					state = STATE_DELIMITER;
-					Identifier id(REAL_CONST, nullptr, 0, atol(buf), nullptr);
+					Identifier id(REAL_CONST, nullptr, 0, atol(buf.GetPtr()), nullptr);
 					identTable.Push(id);
 					buf.Clear();
 					return Lexeme(LEXEME_REAL_CONST, lastIdent++);
@@ -420,7 +419,6 @@ Lexeme Scanner::GetLexeme()
 				else if(c == '#')
 				{
 					state = STATE_PREPROCESSOR;
-					//GetChar();
 				}
 				else
 				{
@@ -430,22 +428,26 @@ Lexeme Scanner::GetLexeme()
 				break;
 
 			case STATE_COMMENT:
-				while (c != '*')
+				while ((c != '*') && (c != EOF))
 					GetChar();
+				if(c == EOF)
+					state = STATE_ERROR;
 				GetChar();
 				if (c == '/')
 				{
 					GetChar();
 					state = STATE_START;
 				}
+				else if(c == EOF)
+					state = STATE_ERROR;
 				break;
 
 			case STATE_PREPROCESSOR:
 				state = STATE_START;
-				PP.Handler(file, identTable, lastIdent); //after PP handling last read char was '\n' || EOF !!!!
+				c = PP.Handler(file, identTable, lastIdent); //after PP handling last read char was '\n' || EOF !!!!
 				//Mb i should return f.e. -1 if the EOF was reached to prevent errors
 				// but if there is ' ' or '\n' before EOF (if an empty string at the end of text file) then it will be ok.
-				GetChar();
+				//GetChar();
 				break;
 
 			case STATE_ERROR:
@@ -465,6 +467,9 @@ void Scanner::MakeLexemeTable()
 		lexemeTable.Push(GetLexeme());
 	}
 	if (PP.GetIfNumber() != 0)
-		throw "a";
+	{
+		Preprocessor::PPException ppExcpt;
+		throw ppExcpt;
+	}
 }
 

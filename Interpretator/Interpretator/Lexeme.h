@@ -265,13 +265,4 @@ public:
 		return -1;
 	}
 
-	void Out() const
-	{
-		for(int i = 0; i < size; ++i)
-		{
-			cout << ptr[i].GetName() << endl;
-		}
-	}
-
-
 };

@@ -34,4 +34,3 @@ program
 	write(x);
 #endif
 }
-
