@@ -4,6 +4,7 @@
 #include "Lexeme.h"
 #include <list>
 #include <iostream>
+#include <cctype>
 
 
 enum PPLexemeType

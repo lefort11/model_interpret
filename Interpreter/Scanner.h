@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Lexeme.h"
 #include "preprocessor.h"
+#include <cctype>
 
 using namespace std;
 
