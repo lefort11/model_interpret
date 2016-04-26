@@ -3,7 +3,7 @@
 
 /*TEST(PPTest)
 		{
-			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpretator/Interpretator/tests/test1.txt");
+			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpreter/tests/test1.txt");
 			scanner.MakeLexemeTable();
 			assert(Scanner::lexemeTable[0] == LEXEME_PROGRAM);
 			assert(Scanner::lexemeTable[1] == LEXEME_LPARENTH);
@@ -125,7 +125,7 @@
 
 TEST(PPtest2)
 		{
-			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpretator/Interpretator/tests/test2.txt");
+			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpreter/tests/test2.txt");
 			scanner.MakeLexemeTable();
 			assert(Scanner::lexemeTable[0] == LEXEME_PROGRAM);
 			assert(Scanner::lexemeTable[1] == LEXEME_LPARENTH);

@@ -14,7 +14,7 @@
 
 TEST(MakeLexemeTableTest)
 		{
-			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpretator/Interpretator/tests/test.txt");
+			Scanner scanner("/Users/Gleb/Desktop/model_interpret/Interpreter/tests/test.txt");
 			scanner.MakeLexemeTable();
 			assert(Scanner::lexemeTable[0] == LEXEME_PROGRAM);
 			assert(Scanner::lexemeTable[1] == LEXEME_LPARENTH);
