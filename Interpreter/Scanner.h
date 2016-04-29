@@ -14,7 +14,8 @@ class Scanner
 {
 	enum State
 	{
-		STATE_START,
+		STATE_START, // STart was replaced by uncertainty...
+		STATE_UNCERTAINTY, // check it later
 		STATE_NAME,
 		STATE_CONSTANT,
 		STATE_REAL_CONST,
@@ -212,6 +213,11 @@ inline Lexeme Scanner::GetLexeme()
 		switch (state)
 		{
 			case STATE_START:
+				GetChar();
+				state = STATE_UNCERTAINTY;
+				break; // самое начальное состояние только для того, чтобы прочитать первый символ
+
+			case STATE_UNCERTAINTY:
 				if (isalpha(c))
 				{
 					state = STATE_KEYWORD;
@@ -287,7 +293,7 @@ inline Lexeme Scanner::GetLexeme()
 				else
 				{
 					GetChar();
-					state = STATE_START;
+					state = STATE_UNCERTAINTY;
 					Identifier id(STRING_CONST, nullptr, 0, 0, buf);
 					identTable.Push(id);
 					buf.Clear();
@@ -367,7 +373,7 @@ inline Lexeme Scanner::GetLexeme()
 					}
 					else
 					{
-						state = STATE_START;
+						state = STATE_UNCERTAINTY;
 						buf.Clear();
 						return Lexeme(LEXEME_DIVISION, 0);
 					}
@@ -394,7 +400,7 @@ inline Lexeme Scanner::GetLexeme()
 					{
 						while ((c == ' ') || (c == '\n') || (c == '\t'))
 							GetChar();
-						state = STATE_START;
+						state = STATE_UNCERTAINTY;
 					}
 					else if (isalpha(c))
 						state = STATE_KEYWORD;
@@ -409,7 +415,7 @@ inline Lexeme Scanner::GetLexeme()
 						GetChar(); //'\n' will be next
 					else // c == ';'
 					{
-						state = STATE_START;
+						state = STATE_UNCERTAINTY;
 						buf.Clear();
 						GetChar();
 						return Lexeme(LEXEME_SEMICOLON, 0);
@@ -436,14 +442,14 @@ inline Lexeme Scanner::GetLexeme()
 				if (c == '/')
 				{
 					GetChar();
-					state = STATE_START;
+					state = STATE_UNCERTAINTY;
 				}
 				else if(c == EOF)
 					state = STATE_ERROR;
 				break;
 
 			case STATE_PREPROCESSOR:
-				state = STATE_START;
+				state = STATE_UNCERTAINTY;
 				c = PP.Handler(file, identTable, lastIdent); //after PP handling last read char was '\n' || EOF !!!!
 				//Mb i should return f.e. -1 if the EOF was reached to prevent errors
 				// but if there is ' ' or '\n' before EOF (if an empty string at the end of text file) then it will be ok.
@@ -458,9 +464,8 @@ inline Lexeme Scanner::GetLexeme()
 }
 
 
-void Scanner::MakeLexemeTable()
+inline void Scanner::MakeLexemeTable()
 {
-	GetChar();
 	while(c != EOF)
 	{
 		lexemeTable.Push(GetLexeme());

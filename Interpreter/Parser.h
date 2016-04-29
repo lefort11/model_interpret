@@ -8,7 +8,10 @@
 class Parser
 {
 	Scanner scanner;
-	int lastLexeme; // last lexeme number in lexemeTable
+	Lexeme currentLexeme;
+	/*LexemeType currentLexemeType;
+	int currentLexemeValue; */
+
 
 	void Program();
 	void Descriptions();
@@ -31,10 +34,15 @@ public:
 
 	class ParserException {};
 
-	Parser(const char* filepath): scanner(filepath), lastLexeme(0)
+	void GetLexeme()
 	{
-		scanner.MakeLexemeTable();
+		currentLexeme = scanner.GetLexeme();
+		//currentLexemeValue = currentLexeme.GetValue();
+		//currentLexemeType = currentLexeme.GetType();
 	}
+
+	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID)
+	{}
 
 	void Analyze();
 

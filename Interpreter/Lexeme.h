@@ -79,9 +79,14 @@ public:
 		return value;
 	}
 
-	bool operator==(Lexeme const &other)
+	bool operator==(Lexeme const &other) const
 	{
 		return ((type == other.type) && (value == other.value));
+	}
+
+	bool operator!= (Lexeme const &other) const
+	{
+		return ((type != other.type) || (value != other.value));
 	}
 };
 
@@ -118,6 +123,11 @@ public:
 																								   realValue(floatv),
 																								   stringValue(stringv) {}
 
+	void ChangeType(IdentType type)
+	{
+		this->type = type;
+	}
+
 	String const& GetName() const
 	{
 		return name;
@@ -128,6 +138,16 @@ public:
 		intValue = v;
 	}
 
+	void ChangeRealValue(float v)
+	{
+		realValue = v;
+	}
+
+	void ChangeStringValue(String const& str)
+	{
+		stringValue = str;
+	}
+
 	void ChangeName(String const& newName)
 	{
 		name = newName;
@@ -136,6 +156,26 @@ public:
 	IdentType GetType() const
 	{
 		return type;
+	}
+
+	int GetIntValue() const
+	{
+		return intValue;
+	}
+
+	float GetRealValue() const
+	{
+		return realValue;
+	}
+
+	String const& GetStringValue() const
+	{
+		return stringValue;
+	}
+
+	void Declare()
+	{
+		declared = true;
 	}
 
 	bool isDeclared() const
