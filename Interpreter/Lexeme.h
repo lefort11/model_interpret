@@ -60,9 +60,10 @@ class Lexeme
 
 public:
 
-	Lexeme(LexemeType type = LEXEME_VOID, int value = 0) : type(type), value(value) {}
+	Lexeme(LexemeType type = LEXEME_VOID, int value = 0) : type(type), value(value)
+	{ }
 
-	void Change(LexemeType type = LEXEME_VOID, int value = 0)
+	void Change(LexemeType type = LEXEME_VOID, int value = 0, bool declared = false)
 	{
 		this->type = type;
 		this->value = value;
@@ -78,7 +79,7 @@ public:
 		return value;
 	}
 
-	bool operator==(Lexeme const& other)
+	bool operator==(Lexeme const &other)
 	{
 		return ((type == other.type) && (value == other.value));
 	}
@@ -94,20 +95,28 @@ enum IdentType
 	USER,
 	INT_CONST,
 	REAL_CONST,
-	STRING_CONST
+	STRING_CONST,
+	LABEL
 };
 
 class Identifier
 {
 	IdentType type;
 	String name;
+	bool declared;
 	int intValue;
 	float realValue;
 	String stringValue;
 
 public:
-	Identifier(): type(VOID), name(nullptr), intValue(0), realValue(0), stringValue(nullptr) {}
-	Identifier(IdentType type, String const& name, int intv, float floatv, String const& stringv): type(type), name(name), intValue(intv), realValue(floatv), stringValue(stringv) {}
+	Identifier(): type(VOID), name(nullptr), declared(false),intValue(0), realValue(0), stringValue(nullptr) {}
+
+	Identifier(IdentType type, String const& name, int intv, float floatv, String const& stringv): type(type),
+																								   name(name),
+																								   declared(false),
+																								   intValue(intv),
+																								   realValue(floatv),
+																								   stringValue(stringv) {}
 
 	String const& GetName() const
 	{
@@ -127,6 +136,11 @@ public:
 	IdentType GetType() const
 	{
 		return type;
+	}
+
+	bool isDeclared() const
+	{
+		return declared;
 	}
 };
 
