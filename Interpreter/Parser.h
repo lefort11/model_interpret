@@ -36,6 +36,12 @@ class Parser
 	//void Variable();
 	void AssignmentExpression();
 	int lastStructureNumber;
+	void GetLexeme()
+	{
+		currentLexeme = scanner.GetLexeme();
+		//currentLexemeValue = currentLexeme.GetValue();
+		//currentLexemeType = currentLexeme.GetType();
+	}
 
 public:
 
@@ -43,12 +49,7 @@ public:
 
 	class ParserException {};
 
-	void GetLexeme()
-	{
-		currentLexeme = scanner.GetLexeme();
-		//currentLexemeValue = currentLexeme.GetValue();
-		//currentLexemeType = currentLexeme.GetType();
-	}
+
 
 	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), lastStructureNumber(0)
 	{}
