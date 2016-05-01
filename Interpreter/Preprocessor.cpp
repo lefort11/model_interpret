@@ -1,4 +1,4 @@
-#include "preprocessor.h"
+ï»¿#include "preprocessor.h"
 
 const PPLexemeType Preprocessor::PPLexemes[] =
 {
@@ -147,8 +147,8 @@ int Preprocessor::Handler(FILE* f, IdentTable& identTable, int& lastIdent)
 			break;
 
 		case PP_ELSE:
-			// ñþäà ìîæíî ïîïàñòü òîëüêî åñëè if âåòêà íå áûëà ïðîïóùåíà
-			// òàê êàê åñëè if âåòêà ïðîïóñêàåòñÿ, òî else äèðåêòèâà îáðàáàòûâàåòñÿ ñðàçó
+			// ÑÑŽÐ´Ð° Ð¼Ð¾Ð¶Ð½Ð¾ Ð¿Ð¾Ð¿Ð°ÑÑ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÐµÑÐ»Ð¸ if Ð²ÐµÑ‚ÐºÐ° Ð½Ðµ Ð±Ñ‹Ð»Ð° Ð¿Ñ€Ð¾Ð¿ÑƒÑ‰ÐµÐ½Ð°
+			// Ñ‚Ð°Ðº ÐºÐ°Ðº ÐµÑÐ»Ð¸ if Ð²ÐµÑ‚ÐºÐ° Ð¿Ñ€Ð¾Ð¿ÑƒÑÐºÐ°ÐµÑ‚ÑÑ, Ñ‚Ð¾ else Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¸Ð²Ð° Ð¾Ð±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ÑÑ ÑÑ€Ð°Ð·Ñƒ
 			localIfNumber = 1;
 			while ((c != EOF) && (localIfNumber > 0))
 			{
