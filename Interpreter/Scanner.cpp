@@ -1,4 +1,4 @@
-#include "Scanner.h"
+﻿#include "Scanner.h"
 
 const char* Scanner::WordTable[] =
 {
