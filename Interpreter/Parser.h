@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "Scanner.h"
-#include "String.h"
+#include <vector>
 
 
 class Parser
@@ -17,20 +17,29 @@ class Parser
 	void Descriptions();
 	void StructDescription();
 	void VariableDescription();
-	void Type();
-	void Variable();
-	void Constant();
-	void Integer(); // integer constant
-	void Real(); // integer constant
-	void String(); // integer constant
-	void Sign();
+	void StructureMemberDescription();
+	//void Type();
+	//void Variable();
+	//void Constant();
+	//void Integer(); // integer constant
+	//void Real(); // integer constant
+	//void String(); // integer constant
+	//void Sign();
 	void Operators();
 	void SingleOperator();
-	void CompoundOperator();
-	void ExpressionOperator();
+	//void CompoundOperator();
+	//void ExpressionOperator();
 	void Expression();
+	void ArithmeticExpression();
+	void Summand();
+	void Factor();
+	//void Variable();
+	void AssignmentExpression();
+	int lastStructureNumber;
 
 public:
+
+	vector<IdentTable> structuresVector;
 
 	class ParserException {};
 
@@ -41,8 +50,15 @@ public:
 		//currentLexemeType = currentLexeme.GetType();
 	}
 
-	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID)
+	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), lastStructureNumber(0)
 	{}
+
+	bool isOperator() const
+	{
+		return true;
+		//return ((currentLexeme == LEXEME_IF) || (currentLexeme == LEXEME_WHILE) || (currentLexeme == LEXEME_FOR) || (currentLexeme == LEXEME_BREAK) || (currentLexeme == LEXEME_GOTO) || (currentLexeme == LEXEME_READ) || (currentLexeme == LEXEME_WRITE) || isCompoundOperator() || isMarkedOperator() || isExpressOperator());
+	}
+
 
 	void Analyze();
 

@@ -102,6 +102,13 @@ public:
 		while (c == ' ')
 			c = fgetc(f);
 		String buf(10, 0);
+		if (c == '-')
+		{
+			buf += c;
+			c = fgetc(f);
+		}
+		else if (c == '+')
+			c = fgetc(f);
 		while (isdigit(c))
 		{
 			buf += c;
