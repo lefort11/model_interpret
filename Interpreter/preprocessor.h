@@ -91,7 +91,7 @@ public:
 			buf += c;
 			c = fgetc(f);
 		}
-		if ((c != ' ') || (c != '\n') || (c != '\r') || (c != EOF))
+		if ((c != ' ') && (c != '\n') && (c != '\r') && (c != EOF))
 			throw PPException();
 		if (c == '\r')
 			c = fgetc(f);
