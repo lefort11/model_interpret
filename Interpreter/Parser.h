@@ -3,14 +3,15 @@
 #include <iostream>
 #include "Scanner.h"
 #include <vector>
+#include "ReversePolishNotation.h"
+#include "Stack.h"
 
 
 class Parser
 {
 	Scanner scanner;
 	Lexeme currentLexeme;
-	/*LexemeType currentLexemeType;
-	int currentLexemeValue; */
+	Stack <LexemeType> lexemeStack;
 
 
 	void Program();
@@ -18,24 +19,13 @@ class Parser
 	void StructDescription();
 	void VariableDescription();
 	void StructureMemberDescription();
-	//void Type();
-	//void Variable();
-	//void Constant();
-	//void Integer(); // integer constant
-	//void Real(); // integer constant
-	//void String(); // integer constant
-	//void Sign();
 	void Operators();
 	void SingleOperator();
-	//void CompoundOperator();
-	//void ExpressionOperator();
 	void Expression();
 	void ArithmeticExpression();
 	void Summand();
 	void Factor();
-	//void Variable();
 	void AssignmentExpression();
-	//void SubExpression();
 
 	int isLoop;
 
@@ -47,22 +37,23 @@ class Parser
 		//currentLexemeType = currentLexeme.GetType();
 	}
 
+	void CheckOperands();
+
+	void CheckNotOperand();
+	void CheckUnaryMinusOperand();
+
 public:
 
 	vector<IdentTable> structuresVector;
+	ReversePolishNotation program; //pshe pshe pshe
 
 	class ParserException {};
 
 
 
-	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), lastStructureNumber(0), isLoop(0)
+	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), lastStructureNumber(0), isLoop(0), program(1000), lexemeStack(100)
 	{}
 
-	bool isOperator() const
-	{
-		return true;
-		//return ((currentLexeme == LEXEME_IF) || (currentLexeme == LEXEME_WHILE) || (currentLexeme == LEXEME_FOR) || (currentLexeme == LEXEME_BREAK) || (currentLexeme == LEXEME_GOTO) || (currentLexeme == LEXEME_READ) || (currentLexeme == LEXEME_WRITE) || isCompoundOperator() || isMarkedOperator() || isExpressOperator());
-	}
 
 
 	void Analyze();

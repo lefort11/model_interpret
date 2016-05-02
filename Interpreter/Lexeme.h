@@ -31,6 +31,7 @@ enum LexemeType
 	LEXEME_MINUS,
 	LEXEME_MULTIPLY,
 	LEXEME_DIVISION,
+
 	LEXEME_SEMICOLON,
 	LEXEME_LBRACKET,
 	LEXEME_RBRACKET,
@@ -51,8 +52,16 @@ enum LexemeType
 
 	LEXEME_NAME,
 	LEXEME_UNARY_MINUS,
+
+	RPM_GOTO,
+	RPM_FALSE_GOTO,
+	RPM_LABEL,
+	RPM_ADDRESS,
+
 	LEXEME_END
 };
+
+/**************************************************/
 
 class Lexeme
 {
@@ -91,6 +100,8 @@ public:
 	}
 };
 
+/**************************************************/
+
 enum IdentType
 {
 	VOID,
@@ -105,6 +116,8 @@ enum IdentType
 	LABEL
 };
 
+
+/**************************************************/
 class Identifier
 {
 	IdentType type;
@@ -179,11 +192,16 @@ public:
 		declared = true;
 	}
 
-	bool isDeclared() const
+	bool IsDeclared() const
 	{
 		return declared;
 	}
 };
+
+/**************************************************/
+
+
+/**************************************************/
 
 class LexemeTable
 {
@@ -249,6 +267,10 @@ public:
 		return (*this);
 	}
 };
+
+/**************************************************/
+
+/**************************************************/
 
 class IdentTable
 {
@@ -321,3 +343,5 @@ public:
 	}
 
 };
+
+/**************************************************/

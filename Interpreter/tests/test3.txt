@@ -5,12 +5,11 @@ program
         int x, y, z;
         string a, b, c;
     };
-	int a = 51, b = 6, c;
+	int a = 51, b = 6, c, i;
 	string x = "abc", y, z = "abcd";
 	A obj;
-
-	c = (a + b) * 2.1;
-	if(c >= 100 or x == z)
+    c = (a + b) * 2.1;
+	if((c >= 100) or (x == z))
 	{
 	    read(y);
 	    write(y);
@@ -26,7 +25,7 @@ program
     }
 	while (c > 100)
 	{
-	    c = c /5;
+	    c = c / 5;
 	    write(c);
 	    x = x + "step";
 	}
