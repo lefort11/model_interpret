@@ -35,6 +35,10 @@ class Parser
 	void Factor();
 	//void Variable();
 	void AssignmentExpression();
+	//void SubExpression();
+
+	int isLoop;
+
 	int lastStructureNumber;
 	void GetLexeme()
 	{
@@ -51,7 +55,7 @@ public:
 
 
 
-	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), lastStructureNumber(0)
+	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), lastStructureNumber(0), isLoop(0)
 	{}
 
 	bool isOperator() const
