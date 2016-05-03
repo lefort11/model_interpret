@@ -101,6 +101,8 @@ const LexemeType Scanner::LexemeDelimiters[] =
 };
 
 
+IdentTable Scanner::identTable = IdentTable();
+
 Lexeme Scanner::GetLexeme()
 {
 	while (c != EOF)

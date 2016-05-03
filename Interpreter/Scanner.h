@@ -44,7 +44,7 @@ class Scanner
 public:
 
 	LexemeTable lexemeTable;
-	IdentTable identTable;
+	static IdentTable identTable;
 
 	class ScannerException {};
 

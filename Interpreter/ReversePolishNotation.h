@@ -64,4 +64,12 @@ public:
 		++freeElementNumber;
 	}
 
+	int SearchForFirstFalseGoto() const
+	{
+		auto counter = GetFreeElementNumber();
+		while (pointer[counter] != RPM_FALSE_GOTO)
+			--counter;
+		return counter;
+	}
+
 };

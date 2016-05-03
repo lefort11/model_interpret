@@ -12,6 +12,9 @@ class Parser
 	Scanner scanner;
 	Lexeme currentLexeme;
 	Stack <LexemeType> lexemeStack;
+	LexemeTable labelTable;
+
+	int lastLabel;
 
 
 	void Program();

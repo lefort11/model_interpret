@@ -116,6 +116,34 @@ public:
 		return (*this);
 	}
 
+	String operator+ (String const& other) const
+	{
+		String temp = *this;
+		temp += other;
+		return temp;
+	}
+
+	bool operator> (String const& other) const
+	{
+		return (strcmp(str, other.str) > 0);
+	}
+
+	bool operator< (String const& other) const
+	{
+		return (strcmp(str, other.str) < 0);
+	}
+
+	bool operator>= (String const& other) const
+	{
+		return (strcmp(str, other.str) >= 0);
+	}
+
+	bool operator<= (String const& other) const
+	{
+		return (strcmp(str, other.str) <= 0);
+	}
+
+
 	void Clear() const
 	{
 		for (int i = 0; i < bufSize; ++i)
@@ -134,6 +162,7 @@ public:
 
 
 	friend ostream& operator<<(ostream& s, String const& string);
+	friend istream& operator>> (istream& s, String& string);
 
 	~String()
 	{
@@ -159,10 +188,20 @@ public:
 	{
 		return bufSize;
 	}
+
 };
 
 inline ostream& operator<<(ostream& s, String const& string)
 {
 	s << string.str;
+	return s;
+}
+
+inline istream& operator >> (istream& s, String& string)
+{
+	char* str = nullptr;
+	s >> str;
+	string.Clear();
+	string = String(str);
 	return s;
 }
