@@ -199,7 +199,7 @@ inline ostream& operator<<(ostream& s, String const& string)
 
 inline istream& operator >> (istream& s, String& string)
 {
-	char* str = nullptr;
+	char str[20];
 	s >> str;
 	string.Clear();
 	string = String(str);

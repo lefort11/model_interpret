@@ -10,7 +10,7 @@ public:
 	
 	class ExecutorException {};
 
-	void execute(ReversePolishNotation& program);
+	void Execute(ReversePolishNotation &program);
 
 
 };

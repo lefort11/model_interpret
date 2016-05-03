@@ -125,17 +125,17 @@ class Identifier
 	String name;
 	bool declared;
 	int intValue;
-	float realValue;
+	double realValue;
 	String stringValue;
 
 public:
 	Identifier(): type(VOID), name(nullptr), declared(false),intValue(0), realValue(0), stringValue(nullptr) {}
 
-	Identifier(IdentType type, String const& name, int intv, float floatv, String const& stringv): type(type),
+	Identifier(IdentType type, String const& name, int intv, double doublev, String const& stringv): type(type),
 																								   name(name),
 																								   declared(false),
 																								   intValue(intv),
-																								   realValue(floatv),
+																								   realValue(doublev),
 																								   stringValue(stringv) {}
 
 	void ChangeType(IdentType type)
@@ -153,7 +153,7 @@ public:
 		intValue = v;
 	}
 
-	void ChangeRealValue(float v)
+	void ChangeRealValue(double v)
 	{
 		realValue = v;
 	}
@@ -178,7 +178,7 @@ public:
 		return intValue;
 	}
 
-	float GetRealValue() const
+	double GetRealValue() const
 	{
 		return realValue;
 	}

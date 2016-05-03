@@ -1,28 +1,20 @@
 program
 {
-    struct A
-    {
-        int x, y, z;
-        string a, b, c;
-    };
 	int a = 51, b = 6, c, i;
 	string x = "abc", y, z = "abcd";
-	A obj;
+	real mom = 2.1;
     c = (a + b) * 2.1;
+    write(c);
+    write(mom);
 	if((c >= 100) or (x == z))
 	{
+	    write("enter the string");
 	    read(y);
 	    write(y);
 	    write(x+y+z,c);
 	}
-
 	else
-	    c = a = 21; /* dfgjdflkgjdlfgjldf slkdfjsldk skldgjsldkg*/
-    for( i = 1; i < 2; i + 1)
-    {
-      L:write("KEK");
-        break;
-    }
+	    c = a; /* dfgjdflkgjdlfgjldf slkdfjsldk skldgjsldkg*/
 	while (c > 100)
 	{
 	    c = c / 5;

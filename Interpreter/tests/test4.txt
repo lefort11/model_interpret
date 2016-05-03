@@ -1,0 +1,9 @@
+program
+{
+    string y;
+    read(y);
+    write(y);
+
+
+
+}

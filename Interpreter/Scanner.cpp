@@ -174,7 +174,7 @@ Lexeme Scanner::GetLexeme()
 				else
 				{
 					state = STATE_DELIMITER;
-					Identifier id(REAL_CONST, nullptr, 0, atol(buf.GetPtr()), nullptr);
+					Identifier id(REAL_CONST, nullptr, 0, atof(buf.GetPtr()), nullptr);
 					identTable.Push(id);
 					buf.Clear();
 					return Lexeme(LEXEME_REAL_CONST, lastIdent++);
@@ -275,7 +275,8 @@ Lexeme Scanner::GetLexeme()
 						return Lexeme(LEXEME_DIVISION, 0);
 					}
 				}
-				else if ((c == ' ') || isalpha(c) || isdigit(c) || (c == '"') || (c == '\n') || (c == '\r') || (c == '\t') || (c == ';') || (c == ')') || (c == '(')) //getting of delimiter ended
+				else if ((c == ' ') || isalpha(c) || isdigit(c) || (c == '"') || (c == '\n') ||
+						(c == '\r') || (c == '\t') || (c == ';') || (c == ')') || (c == '(') || (c == '}') || (c == '{')) //getting of delimiter ended
 				{
 					/* в эту ветку можно попасть по двум причинам:
 					 * либо найден разделитель разделителей (закончено чтение разделителя)
@@ -323,6 +324,20 @@ Lexeme Scanner::GetLexeme()
 						buf.Clear();
 						GetChar();
 						return Lexeme(LEXEME_RBRACKET);
+					}
+					else if(c == '}')
+					{
+						state = STATE_UNCERTAINTY;
+						buf.Clear();
+						GetChar();
+						return Lexeme(LEXEME_RPARENTH);
+					}
+					else if(c == '{')
+					{
+						state = STATE_UNCERTAINTY;
+						buf.Clear();
+						GetChar();
+						return Lexeme(LEXEME_LPARENTH);
 					}
 
 					else // c == ';'
