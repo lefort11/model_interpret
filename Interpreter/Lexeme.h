@@ -290,12 +290,38 @@ public:
 	{
 		ptr = new Identifier[size];
 	}
+
+	IdentTable(IdentTable const& other)
+	{
+		size = other.size;
+		ptr = new Identifier[size];
+		for (int i = 0; i < size; ++i)
+			ptr[i] = other.ptr[i];
+	}
+
 	~IdentTable()
 	{
 		if(size == 1)
 			delete ptr;
 		else
 			delete[] ptr;
+	}
+
+	IdentTable& operator=(IdentTable const& other)
+	{
+		if(this != &other)
+		{
+			if (size == 1)
+				delete ptr;
+			else
+				delete[] ptr;
+			size = other.size;
+			ptr = new Identifier[size];
+			for (auto i = 0; i < size; ++i)
+				ptr[i] = other.ptr[i];
+
+		}
+		return (*this);
 	}
 
 	void Push(Identifier const& ident)
@@ -331,7 +357,7 @@ public:
 		return ptr[i];
 	}
 
-	int Search(String string) const
+	int Search(String const& string) const
 	{
 		for (int i = 0; i < size; ++i)
 		{
@@ -341,6 +367,16 @@ public:
 			}
 		}
 		return -1;
+	}
+
+	int GetSize() const
+	{
+		return size;
+	}
+
+	void Pop()
+	{
+		--size;
 	}
 
 };

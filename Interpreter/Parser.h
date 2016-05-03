@@ -17,6 +17,7 @@ class Parser
 	int lastLabel;
 
 
+
 	void Program();
 	void Descriptions();
 	void StructDescription();
@@ -32,7 +33,6 @@ class Parser
 
 	int isLoop;
 
-	int lastStructureNumber;
 	void GetLexeme()
 	{
 		currentLexeme = scanner.GetLexeme();
@@ -47,14 +47,56 @@ class Parser
 
 public:
 
-	vector<IdentTable> structuresVector;
 	ReversePolishNotation program; //pshe pshe pshe
 
 	class ParserException {};
 
+	class Structure
+	{
+		IdentTable identTable;
+		String nameType;
+
+	public:
+		Structure(String name) :identTable(), nameType(name) {}
+
+		void Push(Identifier ident)
+		{
+			identTable.Push(ident);
+		}
+
+		int GetSize() const
+		{
+			return identTable.GetSize();
+		}
+
+		String const& GetTypeName() const
+		{
+			return nameType;
+		}
+
+		Identifier const& operator[] (int i) const
+		{
+			return identTable[i];
+		}
+
+		Identifier& operator[] (int i) 
+		{
+			return identTable[i];
+		}
+
+		int Search(String name) const
+		{
+			return identTable.Search(name);
+		}
+
+	};
+
+	static vector<Structure> structuresVector;
+	static int lastStructureNumber;
 
 
-	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), lastStructureNumber(0), isLoop(0), program(1000), lexemeStack(100)
+
+	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), isLoop(0), program(1000), lexemeStack(100)
 	{}
 
 
