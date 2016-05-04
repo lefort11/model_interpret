@@ -58,7 +58,7 @@ enum LexemeType
 	RPM_LABEL,
 	RPM_ADDRESS,
 	RPM_OUT_OF_STACK,
-	RPM_STRUCTURE_MEMBER_ADDRESS
+	RPM_STRUCTURE_MEMBER_ADDRESS,
 
 	LEXEME_END
 };
@@ -69,10 +69,11 @@ class Lexeme
 {
 	LexemeType type;
 	int value;
+	int tableNumber;
 
 public:
 
-	Lexeme(LexemeType type = LEXEME_VOID, int value = 0) : type(type), value(value)
+	Lexeme(LexemeType type = LEXEME_VOID, int value = 0, int tableNum = 0) : type(type), value(value), tableNumber(tableNum)
 	{ }
 
 	void Change(LexemeType type = LEXEME_VOID, int value = 0, bool declared = false)
@@ -99,6 +100,11 @@ public:
 	bool operator!= (Lexeme const &other) const
 	{
 		return ((type != other.type) || (value != other.value));
+	}
+
+	int GetTableNumber() const
+	{
+		return tableNumber;
 	}
 };
 

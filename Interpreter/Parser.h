@@ -58,6 +58,7 @@ public:
 
 	public:
 		Structure(String name): identTable(), nameType(name) {}
+		Structure(IdentTable idTable, String name): identTable(idTable), nameType(name) {}
 
 		Structure(Structure const& other): identTable(other.identTable), nameType(other.nameType)
 		{ }
@@ -92,11 +93,16 @@ public:
 			return identTable.Search(name);
 		}
 
+		Structure& operator= (Structure const& other)
+		{
+			identTable = other.identTable;
+			nameType = other.nameType;
+		}
+
 	};
 
 	static std::vector<Structure> structuresVector;
 	int lastStructureNumber;
-
 
 
 	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), isLoop(0), program(1000), lexemeStack(100), lastStructureNumber(0)
