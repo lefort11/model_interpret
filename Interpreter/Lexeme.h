@@ -2,6 +2,8 @@
 
 #include "String.h"
 
+#define BUF_SIZE 20
+
 enum LexemeType
 {
 	LEXEME_VOID, //0
@@ -58,7 +60,7 @@ enum LexemeType
 	RPM_LABEL,
 	RPM_ADDRESS,
 	RPM_OUT_OF_STACK,
-	RPM_STRUCTURE_MEMBER_ADDRESS,
+	RPM_LOOP,
 
 	LEXEME_END
 };
@@ -76,11 +78,7 @@ public:
 	Lexeme(LexemeType type = LEXEME_VOID, int value = 0, int tableNum = 0) : type(type), value(value), tableNumber(tableNum)
 	{ }
 
-	void Change(LexemeType type = LEXEME_VOID, int value = 0, bool declared = false)
-	{
-		this->type = type;
-		this->value = value;
-	}
+
 
 	LexemeType GetType() const
 	{
@@ -218,48 +216,78 @@ class LexemeTable
 {
 	Lexeme* ptr;
 	int size;
+	int bufSize;
 
 public:
 
-	LexemeTable() : ptr(nullptr), size(0) {}
+	LexemeTable() : ptr(new Lexeme[BUF_SIZE]), size(0), bufSize(BUF_SIZE) {}
 	LexemeTable(Lexeme const& lex)
 	{
-		ptr = new Lexeme(lex);
+		bufSize = BUF_SIZE;
 		size = 1;
+		ptr = new Lexeme[bufSize];
+		*ptr = lex;
 	}
-	LexemeTable(int size) : size(size)
+	LexemeTable(int size) : size(0), bufSize(size)
 	{
 		ptr = new Lexeme[size];
 	}
+
+	LexemeTable(LexemeTable const& other)
+	{
+		bufSize = other.bufSize;
+		size = other.size;
+		ptr = new Lexeme[bufSize];
+		for(int i = 0; i < size; ++i)
+			ptr[i] = other.ptr[i];
+	}
+
 	~LexemeTable()
 	{
-		if(size == 1)
-			delete ptr;
-		else
+		delete[] ptr;
+	}
+
+	LexemeTable& operator=(LexemeTable const& other)
+	{
+		if(this != &other)
+		{
+			bufSize = other.bufSize;
+			size = other.size;
 			delete[] ptr;
+			ptr = new Lexeme[bufSize];
+			for(int i = 0; i < size; ++i)
+				ptr[i] = other.ptr[i];
+		}
+		return (*this);
 	}
 
 	void Push(Lexeme const& lex)
 	{
 		if (ptr == nullptr)
 		{
-			ptr = new Lexeme(lex);
+			size = 1;
+			bufSize = BUF_SIZE;
+			ptr = new Lexeme[bufSize];
+			*ptr = lex;
 		}
 		else
 		{
-			Lexeme* temp = new Lexeme[size+1];
-			for (int i = 0; i < size; ++i)
+			if(size == bufSize)
 			{
-				temp[i] = ptr[i];
-			}
-			temp[size] = lex;
-			if(size == 1)
-				delete ptr;
-			else
+				Lexeme *temp = new Lexeme[size + 1];
+				for (int i = 0; i < size; ++i)
+				{
+					temp[i] = ptr[i];
+				}
+				temp[size++] = lex;
 				delete[] ptr;
-			ptr = temp;
+				ptr = temp;
+			}
+			else
+			{
+				ptr[size++] = lex;
+			}
 		}
-		++size;
 	}
 
 	Lexeme& operator[](int i)
@@ -287,19 +315,21 @@ class IdentTable
 {
 	Identifier* ptr;
 	int size;
+	int bufSize;
 
 public:
 
-	IdentTable() : ptr(nullptr), size(0) {}
+	IdentTable() : size(0), bufSize(BUF_SIZE), ptr(new Identifier[BUF_SIZE]) {}
 	IdentTable(Identifier const& ident)
 	{
 		size = 1;
-		ptr = new Identifier[size];
-		*ptr = Identifier(ident);
+		bufSize = BUF_SIZE;
+		ptr = new Identifier[bufSize];
+		*ptr = ident;
 	}
-	IdentTable(int size) : size(size)
+	IdentTable(int size) : size(0), bufSize(size)
 	{
-		ptr = new Identifier[size];
+		ptr = new Identifier[bufSize];
 	}
 
 	IdentTable(IdentTable const& other)
@@ -307,7 +337,8 @@ public:
 		if(other.ptr != nullptr)
 		{
 			size = other.size;
-			ptr = new Identifier[size];
+			bufSize = other.bufSize;
+			ptr = new Identifier[bufSize];
 			for (int i = 0; i < size; ++i)
 				ptr[i] = other.ptr[i];
 		}
@@ -331,14 +362,16 @@ public:
 			{
 				delete[] ptr;
 				size = other.size;
-				ptr = new Identifier[size];
+				bufSize = other.bufSize;
+				ptr = new Identifier[bufSize];
 				for (auto i = 0; i < size; ++i)
 					ptr[i] = other.ptr[i];
 			}
 			else
 			{
 				size = 0;
-				ptr = nullptr;
+				bufSize = BUF_SIZE;
+				ptr = new Identifier[bufSize];
 			}
 
 		}
@@ -350,20 +383,28 @@ public:
 		if (ptr == nullptr)
 		{
 			size = 1;
-			ptr = new Identifier[size];
-			*ptr = Identifier(ident);
+			bufSize = BUF_SIZE;
+			ptr = new Identifier[bufSize];
+			*ptr = ident;
 		}
 		else
 		{
-			Identifier* temp = new Identifier[size + 1];
-			for (int i = 0; i < size; ++i)
+			if(size == bufSize)
 			{
-				temp[i] = ptr[i];
+				bufSize *= 2;
+				Identifier *temp = new Identifier[bufSize];
+				for (int i = 0; i < size; ++i)
+				{
+					temp[i] = ptr[i];
+				}
+				temp[size++] = ident;
+				delete[] ptr;
+				ptr = temp;
 			}
-			temp[size] = ident;
-			delete[] ptr;
-			ptr = temp;
-			++size;
+			else
+			{
+				ptr[size++] = ident;
+			}
 		}
 	}
 

@@ -57,6 +57,8 @@ public:
 			length = 0;
 			bufSize = other.bufSize;
 			str = new char[other.bufSize];
+			for(auto i = 0; i < bufSize; ++i)
+				str[i] = '\0';
 		}
 	}
 

@@ -255,11 +255,17 @@ Lexeme Scanner::GetLexeme()
 				else
 				{
 					state = STATE_DELIMITER;
-					Identifier id(VOID, buf, 0, 0, nullptr);
-					//identTable.Push(id);
-					structuresVector[0].Push(id);
+					int position = structuresVector[0].Search(buf);
+					if(position == -1)
+					{
+						Identifier id(VOID, buf, 0, 0, nullptr);
+						//identTable.Push(id);
+						structuresVector[0].Push(id);
+						buf.Clear();
+						return Lexeme(LEXEME_NAME, lastIdent++);
+					}
 					buf.Clear();
-					return Lexeme(LEXEME_NAME, lastIdent++);
+					return Lexeme(LEXEME_NAME, position);
 				}
 				break;
 

@@ -30,7 +30,7 @@ class Parser
 	void Summand();
 	void Factor();
 	void AssignmentExpression();
-	void ExtendedExpression();
+	//void ExtendedExpression();
 
 	int isLoop;
 

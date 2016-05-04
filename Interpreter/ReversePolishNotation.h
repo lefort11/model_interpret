@@ -72,4 +72,12 @@ public:
 		return counter;
 	}
 
+	int SearchForFirstLoop() const
+	{
+		auto counter = GetFreeElementNumber();
+		while(pointer[counter] != RPM_LOOP)
+			--counter;
+		return counter;
+	}
+
 };
