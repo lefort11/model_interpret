@@ -1,13 +1,8 @@
 program
 {
-    struct A
-    {
-        int one, two;
-        real three;
-    };
-	A obj;
-	obj.one = 1;
-	write(obj.one);
+    int i = 0;
+    for(i = 0; i < 5; i = i + 1)
+        write(i);
 
 
 }
