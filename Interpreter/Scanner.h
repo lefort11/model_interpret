@@ -99,6 +99,11 @@ public:
 		}
 	}
 
+	void IncLastIdentNumber()
+	{
+		++lastIdent;
+	}
+
 };
 
 

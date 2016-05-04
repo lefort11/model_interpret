@@ -1,9 +1,14 @@
 program
 {
-    string y;
-    read(y);
-    write(y);
-
+    struct A
+    {
+        int one, two;
+        real three;
+    };
+	A obj;
+	obj.one = 1;
+	write(obj.one);
 
 
 }
+

@@ -58,6 +58,7 @@ enum LexemeType
 	RPM_LABEL,
 	RPM_ADDRESS,
 	RPM_OUT_OF_STACK,
+	RPM_STRUCTURE_MEMBER_ADDRESS
 
 	LEXEME_END
 };
@@ -283,8 +284,8 @@ public:
 	IdentTable() : ptr(nullptr), size(0) {}
 	IdentTable(Identifier const& ident)
 	{
-		ptr = new Identifier(ident);
 		size = 1;
+		ptr = new Identifier(ident);
 	}
 	IdentTable(int size) : size(size)
 	{
@@ -293,10 +294,18 @@ public:
 
 	IdentTable(IdentTable const& other)
 	{
-		size = other.size;
-		ptr = new Identifier[size];
-		for (int i = 0; i < size; ++i)
-			ptr[i] = other.ptr[i];
+		if(other.ptr != nullptr)
+		{
+			size = other.size;
+			ptr = new Identifier[size];
+			for (int i = 0; i < size; ++i)
+				ptr[i] = other.ptr[i];
+		}
+		else
+		{
+			size = 0;
+			ptr = nullptr;
+		}
 	}
 
 	~IdentTable()
@@ -311,14 +320,22 @@ public:
 	{
 		if(this != &other)
 		{
-			if (size == 1)
-				delete ptr;
+			if(ptr != nullptr)
+			{
+				if (size == 1)
+					delete ptr;
+				else
+					delete[] ptr;
+				size = other.size;
+				ptr = new Identifier[size];
+				for (auto i = 0; i < size; ++i)
+					ptr[i] = other.ptr[i];
+			}
 			else
-				delete[] ptr;
-			size = other.size;
-			ptr = new Identifier[size];
-			for (auto i = 0; i < size; ++i)
-				ptr[i] = other.ptr[i];
+			{
+				size = 0;
+				ptr = nullptr;
+			}
 
 		}
 		return (*this);

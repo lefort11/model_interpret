@@ -57,9 +57,12 @@ public:
 		String nameType;
 
 	public:
-		Structure(String name) :identTable(), nameType(name) {}
+		Structure(String name): identTable(), nameType(name) {}
 
-		void Push(Identifier ident)
+		Structure(Structure const& other): identTable(other.identTable), nameType(other.nameType)
+		{ }
+
+		void Push(Identifier const& ident)
 		{
 			identTable.Push(ident);
 		}
@@ -84,19 +87,19 @@ public:
 			return identTable[i];
 		}
 
-		int Search(String name) const
+		int Search(String const& name) const
 		{
 			return identTable.Search(name);
 		}
 
 	};
 
-	static vector<Structure> structuresVector;
-	static int lastStructureNumber;
+	static std::vector<Structure> structuresVector;
+	int lastStructureNumber;
 
 
 
-	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), isLoop(0), program(1000), lexemeStack(100)
+	Parser(const char* filepath) : scanner(filepath), currentLexeme(LEXEME_VOID), isLoop(0), program(1000), lexemeStack(100), lastStructureNumber(0)
 	{}
 
 

@@ -1,8 +1,6 @@
 #include "testing.h"
 #include "../Lexeme.h"
 
-#ifdef kek
-
 
 TEST(lexTablePush)
 		{
@@ -21,7 +19,13 @@ TEST(identTableSearch)
 			String string1("Oleg hui");
 			Identifier id(STRING_CONST, string1, 0,0, nullptr);
 			IdentTable idTable(id);
-			assert(idTable.Search(string1) == 0);
+			id = Identifier(STRING_CONST, "penes", 0, 0, nullptr);
+			idTable.Push(id);
+			idTable.Push(Identifier(INT, "KEK", 0, 0, nullptr));
+			assert(idTable.Search("Oleg hui") == 0);
+			assert(idTable.Search("penes") == 1);
+			assert(idTable.Search("KEK") == 2);
+			assert(idTable.Search("pines") == -1);
+			assert(idTable.GetSize() == 3);
 		};
 
-#endif
