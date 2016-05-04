@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include <iostream>
-#include "Lexeme.h"
-#include "Preprocessor.h"
+#include "../Lexeme.h"
+#include "preprocessor.h"
 #include <vector>
 
 using namespace std;

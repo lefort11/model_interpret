@@ -1,4 +1,4 @@
-#include "../Parser.h"
+#include "../Parser/Parser.h"
 
 TEST(parserTest)
 		{

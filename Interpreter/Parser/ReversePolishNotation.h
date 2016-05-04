@@ -1,6 +1,5 @@
-#pragma once
 
-#include "Lexeme.h"
+#include "../Lexeme.h"
 
 
 /* pshe pshe pshe */

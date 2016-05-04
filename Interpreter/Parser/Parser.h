@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include <iostream>
-#include "Scanner.h"
+#include "../Scanner/Scanner.h"
 #include <vector>
 #include "ReversePolishNotation.h"
-#include "Stack.h"
+#include "../Stack.h"
 
 
 class Parser

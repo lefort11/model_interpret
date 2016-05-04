@@ -1,6 +1,6 @@
 #include "testing.h"
-#include "../Parser.h"
-#include "../Executor.h"
+#include "../Parser/Parser.h"
+#include "../Executor/Executor.h"
 
 /*TEST(executorTests)
 		{

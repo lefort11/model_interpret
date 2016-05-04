@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "String.h"
-#include "Lexeme.h"
+#include "../String.h"
+#include "../Lexeme.h"
 #include <list>
 #include <iostream>
 #include <cctype>

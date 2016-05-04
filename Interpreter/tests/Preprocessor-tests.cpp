@@ -1,4 +1,4 @@
-﻿#include "../Scanner.h"
+﻿#include "../Scanner/Scanner.h"
 #include "testing.h"
 
 /*TEST(PPTest)

@@ -201,7 +201,7 @@ inline ostream& operator<<(ostream& s, String const& string)
 
 inline istream& operator >> (istream& s, String& string)
 {
-	char str[20];
+	char str[100];
 	s >> str;
 	string.Clear();
 	string = String(str);
