@@ -101,7 +101,9 @@ const LexemeType Scanner::LexemeDelimiters[] =
 };
 
 
-IdentTable Scanner::identTable = IdentTable();
+//IdentTable Scanner::identTable = IdentTable();
+
+std::vector<Scanner::Structure> Scanner::structuresVector;
 
 Lexeme Scanner::GetLexeme()
 {
@@ -157,7 +159,8 @@ Lexeme Scanner::GetLexeme()
 					//Don't know should i to put const to ident table or not
 					//I think yes
 					Identifier id(INT_CONST, nullptr, atoi(buf.GetPtr()), 0, nullptr);
-					identTable.Push(id);
+					//identTable.Push(id);
+					structuresVector[0].Push(id);
 					buf.Clear();
 					return Lexeme(LEXEME_INT_CONST, lastIdent++);
 				}
@@ -175,7 +178,8 @@ Lexeme Scanner::GetLexeme()
 				{
 					state = STATE_DELIMITER;
 					Identifier id(REAL_CONST, nullptr, 0, atof(buf.GetPtr()), nullptr);
-					identTable.Push(id);
+					//identTable.Push(id);
+					structuresVector[0].Push(id);
 					buf.Clear();
 					return Lexeme(LEXEME_REAL_CONST, lastIdent++);
 				}
@@ -192,7 +196,8 @@ Lexeme Scanner::GetLexeme()
 					GetChar();
 					state = STATE_UNCERTAINTY;
 					Identifier id(STRING_CONST, nullptr, 0, 0, buf);
-					identTable.Push(id);
+					//identTable.Push(id);
+					structuresVector[0].Push(id);
 					buf.Clear();
 					return Lexeme(LEXEME_STRING_CONST, lastIdent++);
 				}
@@ -221,15 +226,15 @@ Lexeme Scanner::GetLexeme()
 					}
 					// it is an identifier
 					int pos;
-					if ((pos = identTable.Search(buf)) == -1) // not found
+					if ((pos = structuresVector[0].Search(buf)) == -1) // not found
 					{
 						Identifier id(VOID, buf, 0, 0, nullptr);
-						identTable.Push(id);
+						structuresVector[0].Push(id);
 						buf.Clear();
 						return Lexeme(LEXEME_NAME, lastIdent++);
 					}
 					//return Lexeme(LEXEME_NAME, pos); //this should be corrected for Preprocessing
-					if (identTable[pos].GetType() == INT_CONST) //this name can be a defined name of some int constant
+					if (structuresVector[0][pos].GetType() == INT_CONST) //this name can be a defined name of some int constant
 					{
 						buf.Clear();
 						return Lexeme(LEXEME_INT_CONST, pos);
@@ -251,7 +256,8 @@ Lexeme Scanner::GetLexeme()
 				{
 					state = STATE_DELIMITER;
 					Identifier id(VOID, buf, 0, 0, nullptr);
-					identTable.Push(id);
+					//identTable.Push(id);
+					structuresVector[0].Push(id);
 					buf.Clear();
 					return Lexeme(LEXEME_NAME, lastIdent++);
 				}
@@ -377,7 +383,7 @@ Lexeme Scanner::GetLexeme()
 
 			case STATE_PREPROCESSOR:
 				state = STATE_UNCERTAINTY;
-				c = PP.Handler(file, identTable, lastIdent); //after PP handling last read char was '\n' || EOF !!!!
+				c = PP.Handler(file, structuresVector[0].GetTableReference(), lastIdent); //after PP handling last read char was '\n' || EOF !!!!
 															 //Mb i should return f.e. -1 if the EOF was reached to prevent errors
 															 // but if there is ' ' or '\n' before EOF (if an empty string at the end of text file) then it will be ok.
 															 //GetChar();

@@ -51,61 +51,8 @@ public:
 
 	class ParserException {};
 
-	class Structure
-	{
-		IdentTable identTable;
-		String nameType;
+	
 
-	public:
-		Structure(String name): identTable(), nameType(name) {}
-		Structure(IdentTable idTable, String name): identTable(idTable), nameType(name) {}
-
-		Structure(Structure const& other): identTable(other.identTable), nameType(other.nameType)
-		{ }
-
-		void Push(Identifier const& ident)
-		{
-			identTable.Push(ident);
-		}
-
-		int GetSize() const
-		{
-			return identTable.GetSize();
-		}
-
-		String const& GetTypeName() const
-		{
-			return nameType;
-		}
-
-		Identifier const& operator[] (int i) const
-		{
-			return identTable[i];
-		}
-
-		Identifier& operator[] (int i) 
-		{
-			return identTable[i];
-		}
-
-		int Search(String const& name) const
-		{
-			return identTable.Search(name);
-		}
-
-		Structure& operator= (Structure const& other)
-		{
-			if(this != &other)
-			{
-				identTable = other.identTable;
-				nameType = other.nameType;
-			}
-			return (*this);
-		}
-
-	};
-
-	static std::vector<Structure> structuresVector;
 	int lastStructureNumber;
 
 
