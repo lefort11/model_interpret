@@ -37,7 +37,7 @@ class Parser
 	{
 		currentLexeme = scanner.GetLexeme();
 		//currentLexemeValue = currentLexeme.GetValue();
-		//currentLexemeType = currentLexeme.GetType();
+		//currentLexemeType = currentLexeme.GetType()
 	}
 
 	void CheckOperands();
@@ -95,8 +95,12 @@ public:
 
 		Structure& operator= (Structure const& other)
 		{
-			identTable = other.identTable;
-			nameType = other.nameType;
+			if(this != &other)
+			{
+				identTable = other.identTable;
+				nameType = other.nameType;
+			}
+			return (*this);
 		}
 
 	};

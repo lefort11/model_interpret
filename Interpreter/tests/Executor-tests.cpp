@@ -13,7 +13,7 @@
 
 TEST(executorTests2)
 		{
-			Parser parser("/Users/Gleb/Desktop/model_interpret/Interpreter/tests/test4.txt");
+			Parser parser("/Users/Gleb/Desktop/model_interpret/Interpreter/tests/test3.txt");
 			parser.Analyze();
 			Executor executor;
 			executor.Execute(parser.program);

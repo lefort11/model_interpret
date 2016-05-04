@@ -144,6 +144,9 @@ public:
 																								   intValue(intv),
 																								   realValue(doublev),
 																								   stringValue(stringv) {}
+	Identifier(Identifier const& other): type(other.type), name(other.name), declared(other.declared), intValue(other.intValue),
+										 realValue(other.realValue), stringValue(other.stringValue) {}
+
 
 	void ChangeType(IdentType type)
 	{
@@ -291,7 +294,8 @@ public:
 	IdentTable(Identifier const& ident)
 	{
 		size = 1;
-		ptr = new Identifier(ident);
+		ptr = new Identifier[size];
+		*ptr = Identifier(ident);
 	}
 	IdentTable(int size) : size(size)
 	{
@@ -316,10 +320,7 @@ public:
 
 	~IdentTable()
 	{
-		if(size == 1)
-			delete ptr;
-		else
-			delete[] ptr;
+		delete[] ptr;
 	}
 
 	IdentTable& operator=(IdentTable const& other)
@@ -328,10 +329,7 @@ public:
 		{
 			if(ptr != nullptr)
 			{
-				if (size == 1)
-					delete ptr;
-				else
-					delete[] ptr;
+				delete[] ptr;
 				size = other.size;
 				ptr = new Identifier[size];
 				for (auto i = 0; i < size; ++i)
@@ -351,7 +349,9 @@ public:
 	{
 		if (ptr == nullptr)
 		{
-			ptr = new Identifier(ident);
+			size = 1;
+			ptr = new Identifier[size];
+			*ptr = Identifier(ident);
 		}
 		else
 		{
@@ -361,13 +361,10 @@ public:
 				temp[i] = ptr[i];
 			}
 			temp[size] = ident;
-			if(size == 1)
-				delete ptr;
-			else
-				delete[] ptr;
+			delete[] ptr;
 			ptr = temp;
+			++size;
 		}
-		++size;
 	}
 
 	Identifier& operator[](int i)
