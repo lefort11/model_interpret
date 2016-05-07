@@ -63,6 +63,8 @@ public:
 	{
 		buf.Clear();
 		c = fgetc(f);
+		while((c == ' ') && (c != EOF))
+			c = fgetc(f);
 		while ((c != ' ') && (c != '\n') && (c != '\r') && (c != EOF))
 		{
 			buf += c;

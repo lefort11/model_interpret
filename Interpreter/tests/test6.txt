@@ -1,0 +1,17 @@
+program
+{
+    int x = 0;
+    for(x = 1; x < 5; x = x + 1)
+    {
+        write(x);
+        if(x == 3)
+            break;
+
+    }
+    write(x);
+    while(x < 15)
+    {
+        write(x);
+        x = x + 1;
+    }
+}

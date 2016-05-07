@@ -78,8 +78,8 @@ public:
 		{
 			if(other.str != nullptr)
 			{
-				delete[] str;
 				length = other.length;
+				delete[] str;
 				str = new char[other.bufSize];
 				strcpy(str, other.str);
 				for (auto i = length; i < other.bufSize; ++i)
@@ -146,10 +146,11 @@ public:
 	}
 
 
-	void Clear() const
+	void Clear()
 	{
 		for (int i = 0; i < bufSize; ++i)
 			str[i] = '\0';
+		length = 0;
 	}
 
 	bool operator==(String const& other) const

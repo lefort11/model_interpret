@@ -9,8 +9,7 @@ using namespace std;
 
 int main()
 {
-	try
-	{
+
 		cout << "Enter the file path" << endl;
 		char filepath[100];
 		cin >> filepath;
@@ -18,8 +17,8 @@ int main()
 		Executor executor;
 		parser.Analyze();
 		executor.Execute(parser.program);
-	}
-	catch(Scanner::ScannerException)
+
+	/*catch(Scanner::ScannerException)
 	{
 		cout << "Lexical error" << endl;
 	}
@@ -34,6 +33,6 @@ int main()
 	catch(Executor::ExecutorException)
 	{
 		cout << "Execution error" << endl;
-	}
+	} */
 	return 0;
 }

@@ -71,9 +71,9 @@ public:
 		return counter;
 	}
 
-	int SearchForFirstLoop() const
+	int SearchForFirstLoop(int currCounter) const //Searches the first RPM_LOOP lexeme near some counter value
 	{
-		auto counter = GetFreeElementNumber();
+		auto counter = currCounter;
 		while(pointer[counter] != RPM_LOOP)
 			--counter;
 		return counter;
