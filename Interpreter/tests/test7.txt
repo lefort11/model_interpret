@@ -1,0 +1,12 @@
+program
+{
+    int x = 1;
+    string str = "asdasd";
+    write(x);
+    goto L2;
+    x = x + 5;
+    L2: write(x);
+    write(str + str + "ytutyouptyo");
+    x = -(5 + 2)* 10) + 3;
+    write(x);
+}

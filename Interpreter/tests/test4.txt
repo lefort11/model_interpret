@@ -1,0 +1,14 @@
+program
+{
+    int i = 0;
+L2: write("LEL");
+    for(i = 1;; i = i + 1)
+    {
+        write(i);
+        if(i == 3)
+            goto L1;
+    }
+L1: write("KEK");
+    goto L2;
+ }
+
