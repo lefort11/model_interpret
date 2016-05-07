@@ -1,0 +1,19 @@
+program
+{
+    struct A
+    {
+        int x, y;
+    };
+    struct C
+    {
+        int x, y;
+    };
+    A a, b;
+    C c;
+    a.x = 2;
+    a.y = 1;
+    b = a;
+    c.x = 7;
+    write(b.x, b.y);
+    write(c.x);
+}
